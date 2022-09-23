@@ -46,6 +46,7 @@ class DetailStoryFragment : Fragment(R.layout.fragment_detail_story) {
                     )
                     .load(story.image)
                     .into(this.ivDetailPhoto)
+                ivDetailPhoto.contentDescription = story.description
                 tvDetailName.text = story.createdBy
                 tvDetailDescription.apply {
                     text = story.description
