@@ -1,0 +1,19 @@
+<resources>
+
+    <style name="Widget.StoryApp.IconButton" parent="Widget.Material3.Button.IconButton">
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Full</item>
+        <item name="iconTint">@color/camera_button</item>
+        <item name="backgroundTint">@color/black_900_alpha_020</item>
+    </style>
+
+    <style name="Widget.StoryApp.IconButton.Outlined" parent="Widget.StoryApp.IconButton">
+        <item name="strokeColor">@color/camera_button</item>
+        <item name="strokeWidth">@dimen/dim_2</item>
+    </style>
+
+    <style name="Widget.StoryApp.AppWidget.Container" parent="android:Widget">
+        <item name="android:id">@android:id/background</item>
+        <item name="android:background">?android:attr/colorBackground</item>
+    </style>
+
+</resources>

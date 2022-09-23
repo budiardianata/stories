@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:transitionName="@string/add_story_transition"
+    tools:context=".ui.create.CreateStoryFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="?attr/actionBarSize"
+        tools:viewBindingIgnore='true' />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/close"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dim_8"
+        android:contentDescription="@string/back"
+        app:icon="@drawable/ic_close"
+        app:layout_constraintBottom_toBottomOf="@id/subject_edit_text"
+        app:layout_constraintEnd_toStartOf="@id/subject_edit_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/subject_edit_text" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/subject_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="@string/create_new"
+        android:textAlignment="center"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        app:layout_constraintBottom_toTopOf="@id/guideline_top"
+        app:layout_constraintEnd_toStartOf="@id/button_add"
+        app:layout_constraintStart_toEndOf="@id/close"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.exam.storyapp.common.view.LoadingButton
+        android:id="@+id/button_add"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dim_8"
+        android:contentDescription="@string/send_story"
+        android:focusable="true"
+        app:icon="@drawable/ic_send"
+        app:layout_constraintBottom_toBottomOf="@id/subject_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/subject_edit_text"
+        app:layout_constraintTop_toTopOf="@id/subject_edit_text" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lay_description"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dim_8"
+        android:focusable="true"
+        android:hint="@string/create_new"
+        app:layout_constraintBottom_toTopOf="@id/add_image_chooser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top"
+        app:placeholderText="@string/write_story">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_add_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:minLines="10"
+            android:scrollbars="vertical" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_image_chooser"
+        style="@style/Widget.Material3.Button.TextButton.Icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dim_8"
+        android:layout_marginVertical="@dimen/dim_8"
+        android:text="@string/add_an_image"
+        android:textAlignment="textStart"
+        android:textSize="16sp"
+        app:cornerRadius="@dimen/dim_0"
+        app:icon="@drawable/ic_add_photo"
+        app:iconPadding="@dimen/dim_8"
+        app:iconSize="@dimen/dim_24"
+        app:layout_constraintBottom_toTopOf="@id/preview_image"
+        app:layout_constraintEnd_toEndOf="@id/lay_description"
+        app:layout_constraintStart_toStartOf="@id/lay_description"
+        app:layout_constraintTop_toBottomOf="@id/lay_description" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/preview_image"
+        android:layout_width="@dimen/dim_0"
+        android:layout_height="@dimen/dim_0"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_image_chooser" />
+</androidx.constraintlayout.widget.ConstraintLayout>

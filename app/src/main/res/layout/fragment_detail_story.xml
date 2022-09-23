@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:transitionName="@string/story_card_detail_transition_name"
+    tools:context=".ui.detail.DetailStoryFragment">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_detail_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <View
+        android:id="@+id/topBg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:alpha="0.5"
+        android:background="?attr/colorSurface"
+        app:layout_constraintBottom_toBottomOf="@id/close_detail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/close_detail"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dim_16"
+        android:contentDescription="@string/camera_close"
+        app:icon="@drawable/ic_close"
+        app:layout_constraintEnd_toStartOf="@id/tv_detail_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_detail_name"
+        style="@style/TextAppearance.Material3.ActionBar.Title"
+        android:layout_width="@dimen/dim_0"
+        android:layout_height="@dimen/dim_0"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toTopOf="@id/tv_detail_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/close_detail"
+        app:layout_constraintTop_toTopOf="@id/close_detail"
+        tools:text="@tools:sample/full_names" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_detail_date"
+        style="@style/TextAppearance.Material3.BodySmall"
+        android:layout_width="@dimen/dim_0"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dim_8"
+        app:layout_constraintBottom_toBottomOf="@id/close_detail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_detail_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_detail_name"
+        tools:text="@tools:sample/date/mmddyy" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_detail_description"
+        style="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_width="@dimen/dim_0"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_top_rounded"
+        android:backgroundTint="?attr/colorSurface"
+        android:maxLines="6"
+        android:padding="@dimen/dim_42"
+        android:scrollbars="vertical"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@tools:sample/lorem/random" />
+</androidx.constraintlayout.widget.ConstraintLayout>

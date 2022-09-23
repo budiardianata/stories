@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name" translatable="false">Story App</string>
+    <string name="story_card_item_transition_name" translatable="false">story_card_%1$s</string>
+    <string name="add_story_transition" translatable="false">story_new</string>
+    <string name="story_card_detail_transition_name" translatable="false">story_card_detail</string>
+    <string name="password">Password</string>
+    <string name="password_placeholder">Input Password</string>
+    <plurals name="password_min_length">
+        <item quantity="one" formatted="true">Password must be at least than %1$d character</item>
+        <item quantity="other" formatted="true">Password must be at least than %1$d characters</item>
+    </plurals>
+    <string name="email_invalid">Email address is not valid.</string>
+    <string name="login">Sign In</string>
+    <string name="logout">Sign Out</string>
+    <string name="email">Email Address</string>
+    <string name="email_placeholder">Input Email Address</string>
+    <string name="register">Create New Account</string>
+    <string name="name">Name</string>
+    <string name="name_placeholder">Input your name</string>
+    <string name="create_new">Create Story</string>
+    <string name="write_story">Write Your Story</string>
+    <string name="send_story">Send Story</string>
+    <string name="add_gallery">Add From Gallery</string>
+    <string name="add_camera">Add From Camera</string>
+    <string name="permission_rationale">Permission Required</string>
+    <string name="permission_rationale_message">Need %1$s permission to access this feature</string>
+    <string name="permission_grant">Grant Permission</string>
+    <string name="permission_denied">%1$s Permission denied</string>
+    <string name="capture_failed">Camera capture failed</string>
+    <string name="camera_flip">Flip Camera</string>
+    <string name="camera_take">take a picture</string>
+    <string name="camera_close">close camera</string>
+    <string name="back">Back</string>
+    <string name="no_connection">No Internet Connection</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="saved_error">Failed to save data</string>
+    <string name="empty_error">Data is Empty</string>
+    <string name="language">Language</string>
+    <string name="retry">Try Again</string>
+    <string name="add_an_image">Add an Image</string>
+    <string name="app_widget_description">This is an app widget description</string>
+</resources>

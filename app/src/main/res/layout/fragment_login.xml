@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.LoginFragment">
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flowInput"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/dim_16"
+        app:constraint_referenced_ids="iv_logo,title_login,lay_email,lay_password,login_button,register_button"
+        app:flow_horizontalAlign="start"
+        app:flow_horizontalBias="0"
+        app:flow_maxElementsWrap="1"
+        app:flow_verticalBias="0.5"
+        app:flow_verticalGap="@dimen/dim_16"
+        app:flow_verticalStyle="packed"
+        app:flow_wrapMode="aligned"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxHeight="200dp"
+        android:minHeight="150dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title_login"
+        style="@style/TextAppearance.Material3.HeadlineLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:text="@string/login"
+        android:textColor="?attr/colorOnSurfaceVariant" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lay_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:hint="@string/email"
+        app:endIconMode="clear_text"
+        app:placeholderText="@string/email_placeholder"
+        app:startIconDrawable="@drawable/ic_email">
+
+        <com.exam.storyapp.common.view.EmailInputEditTextEditText
+            android:id="@+id/ed_login_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lay_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dim_8"
+        android:alpha="0"
+        android:hint="@string/password"
+        app:endIconMode="password_toggle"
+        app:layout_constraintBottom_toTopOf="@id/login_button"
+        app:layout_constraintEnd_toEndOf="@id/lay_email"
+        app:layout_constraintStart_toStartOf="@id/lay_email"
+        app:layout_constraintTop_toBottomOf="@id/lay_email"
+        app:placeholderText="@string/password_placeholder"
+        app:startIconDrawable="@drawable/ic_password">
+
+        <com.exam.storyapp.common.view.PasswordInputEditTextEditText
+            android:id="@+id/ed_login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.exam.storyapp.common.view.LoadingButton
+        android:id="@+id/login_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:contentDescription="@string/login"
+        android:enabled="false"
+        android:text="@string/login"
+        app:icon="@drawable/ic_logout" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/register_button"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dim_8"
+        android:alpha="0"
+        android:contentDescription="@string/register"
+        android:text="@string/register" />
+</androidx.constraintlayout.widget.ConstraintLayout>

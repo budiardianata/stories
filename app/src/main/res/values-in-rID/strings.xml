@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="password">Kata Sandi</string>
+    <string name="password_placeholder">Masukan Kata Sandi</string>
+    <plurals name="password_min_length">
+        <item quantity="other" formatted="true">Tidak boleh kurang dari %1$d karakter</item>
+    </plurals>
+    <string name="email_invalid">Format email salah</string>
+    <string name="login">Masuk</string>
+    <string name="logout">Keluar</string>
+    <string name="email">Alamat Email</string>
+    <string name="email_placeholder">Masukan Alamat Email</string>
+    <string name="register">Buat Akun Baru</string>
+    <string name="name">Nama</string>
+    <string name="name_placeholder">Masukan Nama Anda</string>
+    <string name="create_new">Buat Story</string>
+    <string name="write_story">Tulis Story Anda</string>
+    <string name="send_story">Kirim Story</string>
+    <string name="add_gallery">Tambahkan Dari Galeri</string>
+    <string name="add_camera">Gunakan Kamera</string>
+    <string name="permission_rationale">Akses Diperlukan</string>
+    <string name="permission_rationale_message">Membutuhkan Akses ke %1$s untuk mengakses Fitur</string>
+    <string name="permission_grant">Berikan Akses</string>
+    <string name="permission_denied">Akses ke %1$s ditolak</string>
+    <string name="capture_failed">Gagal mengambil Gambar</string>
+    <string name="camera_flip">Putar Kamera</string>
+    <string name="camera_take">Ambil Gambar</string>
+    <string name="camera_close">Keluar dari Kamera</string>
+    <string name="back">Kembali</string>
+    <string name="no_connection">Tidak Memiliki Koneksi Internet</string>
+    <string name="unknown_error">Kesalahan Tidak Diketahui</string>
+    <string name="language">Bahasa</string>
+    <string name="retry">Coba Lagi</string>
+    <string name="add_an_image">Tambahkan Gambar</string>
+    <string name="app_widget_description">Widget List</string>
+    <string name="saved_error">Gagal Simpan Data</string>
+    <string name="empty_error">Data Kosong</string>
+</resources>
