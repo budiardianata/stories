@@ -1,4 +1,4 @@
-name: Lint
+name: Build
 
 on:
   pull_request:
@@ -7,11 +7,14 @@ on:
   workflow_call:
 
 jobs:
-  lint:
-    name: Run Code Analize 🏗
+  build:
+    name: Run Build Code 🏗
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Gradle Wrapper Validation
+        uses: gradle/wrapper-validation-action@v1
 
       - name: Set up JDK 🐘
         uses: actions/setup-java@v3
@@ -19,22 +22,16 @@ jobs:
           distribution: 'temurin'
           java-version: 11
 
-      - name: Setup Gradle and debug🐘
+      - name: Setup Gradle and Build Debug🐘
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: buildDebug
+          arguments: assembleDebug --stacktrace
           gradle-version: 7.5.1
 
-      - name: Spotless Check 🏗
-        run: gradle spotlessCheck --stacktrace
-
-      - name: Lint 🏗
-        run: gradle lintDebug --stacktrace
-
-      - name: Upload analyze report 📤
-        if: always()
+      - name: Upload build output 📤
+        if:  ${{ success() }}
         uses: actions/upload-artifact@v3
         with:
-          name: lint-report
-          path: ${{github.workspace}}/app/build/reports
+          name: build-output
+          path: ${{github.workspace}}/app/build/outputs
           if-no-files-found: error

@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  analyze:
+    uses: budiardianata/stories/.github/workflows/Lint.yml@main
+
+  build:
+    needs: analyze
+    uses: budiardianata/stories/.github/workflows/Build.yml@main
+
+  release:
+    needs: [analyze, build]
+    name: Release 🚀
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build Output Artefact 📦
+        uses: actions/download-artifact@v3
+        id: build-result
+        with:
+          name: build-output
+
+      - name: Bump version and push tag 📦
+        if: ${{ success() }}
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create github release 🎉
+        if: ${{ success() }}
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
+          artifacts: ${{steps.build-result.outputs.download-path}}/**/*.apk,
+          token: ${{ secrets.GITHUB_TOKEN }}
