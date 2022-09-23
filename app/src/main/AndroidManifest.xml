@@ -20,9 +20,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StoryApp"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="MAP_API_KEY" />
+
         <service
             android:name=".widget.StoryWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <receiver
             android:name=".widget.StoryWidgetProvider"
             android:exported="false">

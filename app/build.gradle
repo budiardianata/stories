@@ -5,6 +5,7 @@ plugins {
     alias libs.plugins.kotlin.serialization
     alias libs.plugins.dager.hilt
     alias libs.plugins.kotlin.kapt
+    alias libs.plugins.maps.secret
     alias libs.plugins.spotless
     alias libs.plugins.ktlint
 }
@@ -57,6 +58,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
     coreLibraryDesugaring libs.desugar
     implementation libs.core.ktx
     implementation libs.activity

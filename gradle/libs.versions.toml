@@ -10,6 +10,7 @@ lifecycle-viewmodel = "2.5.1"
 navigation = "2.5.2"
 okhttp3 = "5.0.0-alpha.10"
 retrofit = "2.9.0"
+secret_map = "2.0.1"
 spotless = "6.11.0"
 version-checker = "0.42.0"
 version-updater = "0.6.1"
@@ -89,6 +90,7 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+maps_secret = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secret_map" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 version-check = { id = "com.github.ben-manes.versions", version.ref = "version-checker" }
 version-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "version-updater" }
