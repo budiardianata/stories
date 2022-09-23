@@ -19,7 +19,7 @@ internal class PasswordInputEditTextEditText @JvmOverloads constructor(
     init {
         this.doAfterTextChanged { text ->
             error = if (!text.isNullOrEmpty() && text.toString().isPasswordValid().not()) {
-                resources.getQuantityString(R.plurals.password_min_length,  Constant.PASSWORD_MIN, Constant.PASSWORD_MIN)
+                resources.getQuantityString(R.plurals.password_min_length, Constant.PASSWORD_MIN, Constant.PASSWORD_MIN)
             } else {
                 onInputValidListener?.invoke(text.toString())
                 null
