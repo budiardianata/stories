@@ -1,0 +1,39 @@
+name: Lint
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_call:
+
+jobs:
+  lint:
+    name: Run Code Analize 🏗
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 🐘
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+
+      - name: Setup Gradle and debug🐘
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: buildDebug
+          gradle-version: 7.5.1
+
+      - name: Spotless Check 🏗
+        run: gradle spotlessCheck --stacktrace
+
+      - name: Lint 🏗
+        run: gradle lintDebug --stacktrace
+
+      - name: Upload analyze report 📤
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: lint-report
+          path: ${{github.workspace}}/app/build/reports
+          if-no-files-found: error
