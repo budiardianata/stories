@@ -37,6 +37,8 @@ kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0"
 lifecyle-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycle-viewmodel" }
 lifecyle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle-viewmodel" }
 material = "com.google.android.material:material:1.6.1"
+map-ktx = { group = "com.google.maps.android", name = "maps-ktx", version = "3.4.0" }
+maps-utils-ktx = { group = "com.google.maps.android", name = "maps-utils-ktx", version = "3.4.0" }
 navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
 okhttp3 = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp3" }
@@ -85,6 +87,8 @@ ui = [
 map-location = [
     "gms-map",
     "gms-location",
+    "map-ktx",
+    "maps-utils-ktx",
 ]
 
 [plugins]

@@ -58,6 +58,9 @@
         <action
             android:id="@+id/action_home_to_detail"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_home_to_storiesMaps"
+            app:destination="@id/storiesMapsFragment" />
 
     </fragment>
 
@@ -90,6 +93,10 @@
         android:name="com.exam.storyapp.ui.camera.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera" />
+    <fragment
+        android:id="@+id/storiesMapsFragment"
+        android:name="com.exam.storyapp.ui.listMap.StoriesMapsFragment"
+        android:label="StoriesMapsFragment" />
 
 
 </navigation>
