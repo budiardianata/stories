@@ -55,7 +55,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                     when (it) {
                         is FormState.Submit -> {
                             when (val state = it.submitState) {
-                                UiState.Loading -> {
+                                is UiState.Loading -> {
                                     binding.formEnable(false)
                                 }
                                 is UiState.Error -> {

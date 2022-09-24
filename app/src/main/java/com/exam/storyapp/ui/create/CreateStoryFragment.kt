@@ -110,7 +110,7 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
 
     private fun handleUiState(state: UiState<String>) {
         when (state) {
-            UiState.Loading -> {
+            is UiState.Loading -> {
                 binding.formEnable(false)
                 requireActivity().hideKeyboard()
             }

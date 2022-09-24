@@ -8,7 +8,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.exam.storyapp.common.util.Constant
-import com.exam.storyapp.common.util.Resource
 import com.exam.storyapp.domain.model.FormState
 import com.exam.storyapp.domain.model.UiState
 import com.exam.storyapp.domain.repositories.StoryRepository
@@ -48,16 +47,9 @@ class CreateStoryViewModel @Inject constructor(
     private fun submitStory() {
         viewModelScope.launch {
             if (description.value.isNotBlank() && image.value != null) {
-                _formState.update { FormState.Submit(UiState.Loading) }
-                when (
-                    val result =
-                        storyRepository.get().createStory(description.value, image.value!!)
-                ) {
-                    is Resource.Error -> _formState.update { FormState.Submit(UiState.Error(result.exception)) }
-                    is Resource.Success -> _formState.update {
-                        FormState.Submit(UiState.Success(result.data))
-                    }
-                }
+                _formState.update { FormState.Submit(UiState.Loading()) }
+                val result = storyRepository.get().createStory(description.value, image.value!!)
+                _formState.update { FormState.Submit(UiState.fromResource(result)) }
             }
         }
     }
