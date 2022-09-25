@@ -96,7 +96,11 @@
     <fragment
         android:id="@+id/storiesMapsFragment"
         android:name="com.exam.storyapp.ui.listMap.StoriesMapsFragment"
-        android:label="StoriesMapsFragment" />
+        android:label="StoriesMapsFragment" >
+        <action
+            android:id="@+id/action_storiesMaps_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 
 
 </navigation>

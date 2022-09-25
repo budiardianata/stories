@@ -31,6 +31,8 @@ import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -53,18 +55,22 @@ class StoryRepositoryImpl @Inject constructor(
         },
     ).flow
 
-    override suspend fun getWidgetStories(perPage: Int, page: Int) = withContext(ioDispatcher) {
+    override fun getStories(
+        perPage: Int,
+        page: Int,
+        withLocation: Boolean,
+    ): Flow<Resource<List<Story>>> = flow {
         try {
-            val response = remoteSource.getStories(page = page, size = perPage)
+            val response = remoteSource.getStories(page, perPage, if (withLocation) 1 else 0)
             if (response.listStory.isNotEmpty()) {
-                Resource.Success(response.listStory.map { it.toDomain() })
+                emit(Resource.Success(response.listStory.map { it.toDomain() }))
             } else {
-                Resource.Error(StringWrapper.Resource(R.string.app_name))
+                emit(Resource.Error(StringWrapper.Resource(R.string.app_name)))
             }
         } catch (e: Exception) {
-            Resource.Error(StringWrapper.Dynamic(e.message ?: "Something went wrong"))
+            emit(Resource.Error(StringWrapper.Dynamic(e.message ?: "Something went wrong")))
         }
-    }
+    }.flowOn(ioDispatcher)
 
     override suspend fun createStory(
         description: String,

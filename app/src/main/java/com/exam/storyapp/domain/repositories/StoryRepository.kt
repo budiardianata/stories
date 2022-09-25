@@ -12,10 +12,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface StoryRepository {
     fun getPagedStories(): Flow<PagingData<Story>>
-    suspend fun getWidgetStories(
+    fun getStories(
         perPage: Int = Constant.PAGING_PER_PAGE,
         page: Int = 1,
-    ): Resource<List<Story>>
+        withLocation: Boolean = false,
+    ): Flow<Resource<List<Story>>>
 
     suspend fun createStory(description: String, image: Uri): Resource<String>
 }

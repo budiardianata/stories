@@ -38,7 +38,7 @@ data class Story(
         return LatLng(lat, lon)
     }
 
-    override fun getTitle(): String = description
+    override fun getTitle(): String = createdBy
 
     override fun getSnippet(): String = description
 }
