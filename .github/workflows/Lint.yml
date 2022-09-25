@@ -5,6 +5,10 @@ on:
     branches:
       - main
   workflow_call:
+    secrets:
+      MAP_API_KEY:
+        description: 'A map key from the caller workflow'
+        required: true
 
 jobs:
   lint:
