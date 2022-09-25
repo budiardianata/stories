@@ -37,4 +37,5 @@
     <string name="empty_error">Data Kosong</string>
     <string name="filter_map">Maksimal Story</string>
     <string name="location">Lokasi Story</string>
+    <string name="location_share">Bagikan Lokasi</string>
 </resources>
