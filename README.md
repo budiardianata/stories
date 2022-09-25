@@ -1,6 +1,6 @@
-# Stories 📱
-[![Lint](https://github.com/budiardianata/stories/workflows/Lint/badge.svg?branch=master)](https://github.com/budiardianata/stories/actions?query=workflow%3ALint)
-[![Build](https://github.com/budiardianata/stories/workflows/Build/badge.svg?branch=main)](https://github.com/budiardianata/stories/actions?query=workflow%3ABuild)
+# Stories 📱 (WIP)
+[![Lint](https://github.com/budiardianata/stories/actions/workflows/Lint.yml/badge.svg)](https://github.com/budiardianata/stories/actions?query=workflow%3ALint)
+[![Build](https://github.com/budiardianata/stories/actions/workflows/Build.yml/badge.svg)](https://github.com/budiardianata/stories/actions?query=workflow%3ABuild)
 [![Release](https://github.com/budiardianata/stories/workflows/Release/badge.svg?branch=main)](https://github.com/budiardianata/stories/actions?query=workflow%3ARelease)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/budiardianata/stories/blob/main/LICENSE)
 
