@@ -19,6 +19,9 @@ jobs:
           distribution: 'temurin'
           java-version: 11
 
+      - name: Update Username from Secrets
+        run: echo mapApiKey="${{ secrets.MAP_API_KEY }}" > ./local.properties
+
       - name: Setup Gradle and debug🐘
         uses: gradle/gradle-build-action@v2
         with:
