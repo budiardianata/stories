@@ -51,7 +51,7 @@ class RegisterViewModel @Inject constructor(
 
     private fun performSignUp() {
         viewModelScope.launch {
-            _formState.update { FormState.Submit(UiState.Loading) }
+            _formState.update { FormState.Submit(UiState.Loading()) }
             when (
                 val status = userRepository.signUp(
                     email = email.value,

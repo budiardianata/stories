@@ -63,6 +63,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         viewmodel.signOut()
                         true
                     }
+                    R.id.action_map -> {
+                        findNavController().navigate(R.id.action_home_to_storiesMaps)
+                        true
+                    }
                     else -> menuItem.onNavDestinationSelected(findNavController())
                 }
             }

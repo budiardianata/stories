@@ -5,6 +5,8 @@ package com.exam.storyapp.domain.model
 
 import android.os.Parcelable
 import android.text.format.DateUtils
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.clustering.ClusterItem
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -16,7 +18,7 @@ data class Story(
     val createdAt: Long,
     val lat: Double = 0.0,
     val lon: Double = 0.0,
-) : Parcelable {
+) : Parcelable, ClusterItem {
 
     val createAtFormatted: String
         get() {
@@ -31,4 +33,12 @@ data class Story(
                 ""
             }
         }
+
+    override fun getPosition(): LatLng {
+        return LatLng(lat, lon)
+    }
+
+    override fun getTitle(): String = createdBy
+
+    override fun getSnippet(): String = description
 }

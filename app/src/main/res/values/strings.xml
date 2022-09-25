@@ -39,4 +39,7 @@
     <string name="retry">Try Again</string>
     <string name="add_an_image">Add an Image</string>
     <string name="app_widget_description">This is an app widget description</string>
+    <string name="filter_map">Max Show Story</string>
+    <string name="location">Story By Location</string>
+    <string name="location_share">Share Location</string>
 </resources>

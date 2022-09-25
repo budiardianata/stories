@@ -14,6 +14,7 @@ object Constant {
     const val KEY_PASSWORD = "password"
     const val KEY_REFRESH = "refresh"
     const val KEY_STORY = "story"
+    const val KEY_LOCATION = "location"
     const val PAGING_INITIAL_PAGE = 1
     const val PAGING_PER_PAGE = 5
     const val PASSWORD_MIN = 6

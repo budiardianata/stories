@@ -25,15 +25,19 @@ import com.exam.storyapp.data.source.remote.StoryApi
 import com.exam.storyapp.data.source.remote.adapter.NetworkResult
 import com.exam.storyapp.domain.model.Story
 import com.exam.storyapp.domain.repositories.StoryRepository
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
@@ -53,29 +57,41 @@ class StoryRepositoryImpl @Inject constructor(
         },
     ).flow
 
-    override suspend fun getWidgetStories(perPage: Int, page: Int) = withContext(ioDispatcher) {
+    override fun getStories(
+        perPage: Int,
+        page: Int,
+        withLocation: Boolean,
+    ): Flow<Resource<List<Story>>> = flow {
         try {
-            val response = remoteSource.getStories(page = page, size = perPage)
+            val response = remoteSource.getStories(page, perPage, if (withLocation) 1 else 0)
             if (response.listStory.isNotEmpty()) {
-                Resource.Success(response.listStory.map { it.toDomain() })
+                emit(Resource.Success(response.listStory.map { it.toDomain() }))
             } else {
-                Resource.Error(StringWrapper.Resource(R.string.app_name))
+                emit(Resource.Error(StringWrapper.Resource(R.string.app_name)))
             }
         } catch (e: Exception) {
-            Resource.Error(StringWrapper.Dynamic(e.message ?: "Something went wrong"))
+            emit(Resource.Error(StringWrapper.Dynamic(e.message ?: "Something went wrong")))
         }
-    }
+    }.flowOn(ioDispatcher)
 
     override suspend fun createStory(
         description: String,
         image: Uri,
-    ) = withContext(ioDispatcher) {
+        location: LatLng?,
+    ): Resource<String> = withContext(ioDispatcher) {
         try {
             compressImage(image).let {
                 val requestFile = it.asRequestBody(it.toMediaType())
                 val desc = description.toRequestBody("text/plain".toMediaType())
                 val body = MultipartBody.Part.createFormData("photo", it.name, requestFile)
-                return@withContext when (val result = remoteSource.uploadStory(desc, body)) {
+                var lat: RequestBody? = null
+                var lon: RequestBody? = null
+                if (location != null) {
+                    lat = location.latitude.toString().toRequestBody("text/plain".toMediaType())
+                    lon = location.longitude.toString().toRequestBody("text/plain".toMediaType())
+                }
+
+                return@withContext when (val result = remoteSource.uploadStory(desc, lat, lon, body)) {
                     is NetworkResult.Error -> Resource.Error(result.message!!)
                     is NetworkResult.Exception -> {
                         val message = when (result.e) {

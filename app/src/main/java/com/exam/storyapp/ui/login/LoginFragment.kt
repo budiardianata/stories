@@ -55,7 +55,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     when (it) {
                         is FormState.Submit -> {
                             when (val state = it.submitState) {
-                                UiState.Loading -> {
+                                is UiState.Loading -> {
                                     binding.formEnable(false)
                                 }
                                 is UiState.Error -> {

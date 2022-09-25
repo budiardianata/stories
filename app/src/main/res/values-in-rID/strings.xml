@@ -35,4 +35,7 @@
     <string name="app_widget_description">Widget List</string>
     <string name="saved_error">Gagal Simpan Data</string>
     <string name="empty_error">Data Kosong</string>
+    <string name="filter_map">Maksimal Story</string>
+    <string name="location">Lokasi Story</string>
+    <string name="location_share">Bagikan Lokasi</string>
 </resources>

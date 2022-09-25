@@ -4,6 +4,7 @@
 package com.exam.storyapp.ui.create
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -31,6 +32,9 @@ import com.exam.storyapp.common.util.Constant
 import com.exam.storyapp.databinding.FragmentCreateStoryBinding
 import com.exam.storyapp.domain.model.FormState
 import com.exam.storyapp.domain.model.UiState
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialArcMotion
@@ -45,12 +49,15 @@ import net.samystudio.permissionlauncher.createPermissionLauncher
 class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
     private val binding by viewBinding(FragmentCreateStoryBinding::bind)
     private val cameraPermissionLauncher = createPermissionLauncher(Manifest.permission.CAMERA)
+    private val locationPermissionLauncher =
+        createPermissionLauncher(Manifest.permission.ACCESS_COARSE_LOCATION)
     private val storagePermissionLauncher =
         createPermissionLauncher(Manifest.permission.READ_EXTERNAL_STORAGE)
     private val viewmodel by viewModels<CreateStoryViewModel>()
     private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let { viewmodel.dispatchEvent(CreateStoryEvent.AddImage(it)) }
     }
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,6 +66,7 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
                 viewmodel.dispatchEvent(CreateStoryEvent.AddImage(it))
             }
         }
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         binding.run {
             buttonAdd.setOnClickListener {
                 viewmodel.dispatchEvent(CreateStoryEvent.Save)
@@ -76,6 +84,17 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
                 scrimColor = Color.TRANSPARENT
                 setPathMotion(MaterialArcMotion())
                 setAllContainerColors(requireContext().themeColor(com.google.android.material.R.attr.colorSurface))
+            }
+            switchShareLocation.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (buttonView.isPressed) {
+                    if (isChecked) {
+                        getCurrentLocation {
+                            viewmodel.dispatchEvent(CreateStoryEvent.AddLocation(it))
+                        }
+                    } else {
+                        viewmodel.dispatchEvent(CreateStoryEvent.AddLocation(null))
+                    }
+                }
             }
         }
 
@@ -102,6 +121,17 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
         }
     }
 
+    @SuppressLint("MissingPermission")
+    private fun getCurrentLocation(callback: (location: LatLng) -> Unit) {
+        locationPermissionLauncher.launch(::handleRationale, ::handleDenied) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    callback(LatLng(location.latitude, location.longitude))
+                }
+            }
+        }
+    }
+
     private fun FragmentCreateStoryBinding.formEnable(isEnable: Boolean) {
         buttonAdd.isLoading = isEnable.not()
         addImageChooser.isEnabled = isEnable
@@ -110,7 +140,7 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
 
     private fun handleUiState(state: UiState<String>) {
         when (state) {
-            UiState.Loading -> {
+            is UiState.Loading -> {
                 binding.formEnable(false)
                 requireActivity().hideKeyboard()
             }

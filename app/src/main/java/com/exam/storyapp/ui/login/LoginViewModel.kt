@@ -45,7 +45,7 @@ class LoginViewModel @Inject constructor(
 
     private fun performLogin() {
         viewModelScope.launch {
-            _loginState.update { FormState.Submit(UiState.Loading) }
+            _loginState.update { FormState.Submit(UiState.Loading()) }
             when (val result = userRepository.signIn(email.value, password.value)) {
                 is Resource.Error -> {
                     _loginState.update { FormState.Submit(UiState.Error(result.exception)) }

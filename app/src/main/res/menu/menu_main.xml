@@ -1,24 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.exam.storyapp.MainActivity">
-    <!--    <item android:icon="@drawable/ic_theme" android:title="@string/theme">-->
-    <!--        <menu>-->
-    <!--            <item-->
-    <!--                android:id="@+id/action_system_default"-->
-    <!--                android:title="@string/follow_system"/>-->
-    <!--            <item-->
-    <!--                android:id="@+id/action_light"-->
-    <!--                android:title="@string/theme_light"/>-->
-    <!--            <item-->
-    <!--                android:id="@+id/action_dark"-->
-    <!--                android:title="@string/theme_dark"/>-->
-    <!--        </menu>-->
-    <!--    </item>-->
-
+    <item
+        android:id="@+id/action_map"
+        android:icon="@drawable/ic_location"
+        android:title="@string/location" />
     <item
         android:id="@+id/action_language"
         android:icon="@drawable/ic_language"
         android:title="@string/language" />
+
     <item
         android:id="@+id/action_logout"
         android:icon="@drawable/ic_logout"
