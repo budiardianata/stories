@@ -11,14 +11,14 @@ on:
 jobs:
   analyze:
     uses: budiardianata/stories/.github/workflows/Lint.yml@main
-    with:
-      mapApiKey: ${{ secrets.MAP_API_KEY }}
+    secrets:
+      MAP_API_KEY: ${{ secrets.MAP_API_KEY }}
 
   build:
     needs: analyze
     uses: budiardianata/stories/.github/workflows/Build.yml@main
-    with:
-      mapApiKey: ${{ secrets.MAP_API_KEY }}
+    secrets:
+      MAP_API_KEY: ${{ secrets.MAP_API_KEY }}
 
   release:
     needs: [analyze, build]
