@@ -20,7 +20,14 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -71,6 +78,7 @@ dependencies {
     implementation libs.bundles.retrofit
     implementation libs.bundles.okhttp3
     implementation libs.bundles.map.location
+    implementation libs.bundles.room
     implementation libs.viewbinding
     implementation libs.permission
     implementation libs.datastore
@@ -79,6 +87,7 @@ dependencies {
     implementation libs.kotlinx.serialization
     implementation libs.hilt.android
     kapt libs.hilt.compiler
+    kapt libs.room.compiler
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
