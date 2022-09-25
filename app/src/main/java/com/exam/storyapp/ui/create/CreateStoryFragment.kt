@@ -49,7 +49,8 @@ import net.samystudio.permissionlauncher.createPermissionLauncher
 class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
     private val binding by viewBinding(FragmentCreateStoryBinding::bind)
     private val cameraPermissionLauncher = createPermissionLauncher(Manifest.permission.CAMERA)
-    private val locationPermissionLauncher = createPermissionLauncher(Manifest.permission.ACCESS_COARSE_LOCATION)
+    private val locationPermissionLauncher =
+        createPermissionLauncher(Manifest.permission.ACCESS_COARSE_LOCATION)
     private val storagePermissionLauncher =
         createPermissionLauncher(Manifest.permission.READ_EXTERNAL_STORAGE)
     private val viewmodel by viewModels<CreateStoryViewModel>()
@@ -114,11 +115,6 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
                         } ?: run {
                             binding.previewImage.setImageResource(R.drawable.ic_image_placeholder)
                         }
-                    }
-                }
-                launch {
-                    viewmodel.location.collectLatest {
-                        Toast.makeText(requireContext(), "Location: $it", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
