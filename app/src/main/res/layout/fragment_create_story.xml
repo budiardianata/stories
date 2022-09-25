@@ -65,7 +65,7 @@
         android:layout_marginHorizontal="@dimen/dim_8"
         android:focusable="true"
         android:hint="@string/create_new"
-        app:layout_constraintBottom_toTopOf="@id/add_image_chooser"
+        app:layout_constraintBottom_toTopOf="@id/lay_share_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline_top"
@@ -98,9 +98,41 @@
         app:iconPadding="@dimen/dim_8"
         app:iconSize="@dimen/dim_24"
         app:layout_constraintBottom_toTopOf="@id/preview_image"
-        app:layout_constraintEnd_toEndOf="@id/lay_description"
-        app:layout_constraintStart_toStartOf="@id/lay_description"
-        app:layout_constraintTop_toBottomOf="@id/lay_description" />
+        app:layout_constraintEnd_toEndOf="@id/lay_share_location"
+        app:layout_constraintStart_toStartOf="@id/lay_share_location"
+        app:layout_constraintTop_toBottomOf="@id/lay_share_location" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/lay_share_location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:maxHeight="?attr/actionBarSize"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/dim_8"
+        app:layout_constraintEnd_toEndOf="@+id/lay_description"
+        app:layout_constraintStart_toStartOf="@+id/lay_description"
+        app:layout_constraintTop_toBottomOf="@id/lay_description"
+        app:layout_constraintBottom_toTopOf="@id/add_image_chooser"
+        android:foreground="?attr/selectableItemBackground">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="@string/location"
+            android:src="@drawable/ic_location"
+            app:tint="?attr/colorPrimary" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switch_share_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/location_share"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="16sp"
+            android:paddingStart="@dimen/dim_8"
+            android:layout_weight="1"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/preview_image"

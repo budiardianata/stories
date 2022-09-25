@@ -36,7 +36,7 @@ hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dag
 kotlinx-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0"
 lifecyle-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycle-viewmodel" }
 lifecyle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle-viewmodel" }
-material = "com.google.android.material:material:1.6.1"
+material = "com.google.android.material:material:1.7.0-rc01"
 map-ktx = { group = "com.google.maps.android", name = "maps-ktx", version = "3.4.0" }
 maps-utils-ktx = { group = "com.google.maps.android", name = "maps-utils-ktx", version = "3.4.0" }
 navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }

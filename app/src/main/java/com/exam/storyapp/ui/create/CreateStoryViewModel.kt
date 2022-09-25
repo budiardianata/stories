@@ -11,6 +11,7 @@ import com.exam.storyapp.common.util.Constant
 import com.exam.storyapp.domain.model.FormState
 import com.exam.storyapp.domain.model.UiState
 import com.exam.storyapp.domain.repositories.StoryRepository
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.*
@@ -24,6 +25,7 @@ class CreateStoryViewModel @Inject constructor(
 
     private val description = savedStateHandle.getStateFlow(Constant.KEY_DESCRIPTIONS, "")
     val image = savedStateHandle.getStateFlow<Uri?>(Constant.KEY_IMAGE, null)
+    val location = savedStateHandle.getStateFlow<LatLng?>(Constant.KEY_LOCATION, null)
 
     private val _formState = MutableStateFlow<FormState>(FormState.Validating())
 
@@ -40,6 +42,7 @@ class CreateStoryViewModel @Inject constructor(
             is CreateStoryEvent.AddDescription -> savedStateHandle[Constant.KEY_DESCRIPTIONS] =
                 event.message
             is CreateStoryEvent.AddImage -> savedStateHandle[Constant.KEY_IMAGE] = event.image
+            is CreateStoryEvent.AddLocation -> savedStateHandle[Constant.KEY_LOCATION] = event.location
             CreateStoryEvent.Save -> submitStory()
         }
     }
@@ -48,7 +51,7 @@ class CreateStoryViewModel @Inject constructor(
         viewModelScope.launch {
             if (description.value.isNotBlank() && image.value != null) {
                 _formState.update { FormState.Submit(UiState.Loading()) }
-                val result = storyRepository.get().createStory(description.value, image.value!!)
+                val result = storyRepository.get().createStory(description.value, image.value!!, location.value)
                 _formState.update { FormState.Submit(UiState.fromResource(result)) }
             }
         }
