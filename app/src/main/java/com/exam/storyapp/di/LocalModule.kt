@@ -7,8 +7,12 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
+import androidx.room.Room
 import com.exam.storyapp.common.annotations.IOCoroutineScope
 import com.exam.storyapp.common.util.Constant
+import com.exam.storyapp.data.source.local.db.RemoteKeysDao
+import com.exam.storyapp.data.source.local.db.StoryDao
+import com.exam.storyapp.data.source.local.db.StoryDb
 import com.exam.storyapp.data.source.local.preference.UserPreference
 import com.exam.storyapp.data.source.local.preference.UserPreferenceSerializer
 import dagger.Module
@@ -21,7 +25,7 @@ import kotlinx.coroutines.CoroutineScope
 
 @Module
 @InstallIn(SingletonComponent::class)
-object PreferenceModule {
+object LocalModule {
 
     @Singleton
     @Provides
@@ -36,4 +40,20 @@ object PreferenceModule {
             corruptionHandler = null,
         )
     }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): StoryDb {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            StoryDb::class.java,
+            "story_db",
+        ).build()
+    }
+
+    @Provides
+    fun provideStoryDao(database: StoryDb): StoryDao = database.storyDao()
+
+    @Provides
+    fun provideRemoteKeysDao(database: StoryDb): RemoteKeysDao = database.remoteKeysDao()
 }
