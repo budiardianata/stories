@@ -36,14 +36,14 @@ class StoryRemoteMediator constructor(
             LoadType.PREPEND -> {
                 val remoteKeys = getRemoteKeyForFirstItem(state)
                 val prevKey = remoteKeys?.prevKey ?: return MediatorResult.Success(
-                    endOfPaginationReached = remoteKeys != null
+                    endOfPaginationReached = remoteKeys != null,
                 )
                 prevKey
             }
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeysForLastItem(state)
                 val nextKey = remoteKeys?.nextKey ?: return MediatorResult.Success(
-                    endOfPaginationReached = remoteKeys != null
+                    endOfPaginationReached = remoteKeys != null,
                 )
                 nextKey
             }
