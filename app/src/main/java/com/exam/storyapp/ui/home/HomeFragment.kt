@@ -100,8 +100,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             topAppBar.addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
             binding.retryButton.setOnClickListener { storyAdapter.refresh() }
             fab.apply {
-                setShowMotionSpecResource(R.animator.show_fab)
-                setHideMotionSpecResource(R.animator.hide_fab)
+//                setShowMotionSpecResource(R.animator.show_fab)
+//                setHideMotionSpecResource(R.animator.hide_fab)
                 setOnClickListener(::navigateToCreateStory)
             }
         }
@@ -115,8 +115,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
                 launch {
                     viewmodel.stories.collect {
-                        storyAdapter.submitData(it)
                         binding.swipeRefreshLayout.isRefreshing = false
+                        val recyclerViewState = binding.homeList.layoutManager?.onSaveInstanceState()
+                        storyAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+                        binding.homeList.layoutManager?.onRestoreInstanceState(recyclerViewState)
                     }
                 }
                 launch {
