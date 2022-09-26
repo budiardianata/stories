@@ -8,9 +8,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import androidx.exifinterface.media.ExifInterface
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
+import androidx.paging.*
 import com.exam.storyapp.R
 import com.exam.storyapp.common.annotations.IODispatcher
 import com.exam.storyapp.common.extensions.copyToCachedFile
@@ -20,7 +18,8 @@ import com.exam.storyapp.common.extensions.extension
 import com.exam.storyapp.common.util.Constant
 import com.exam.storyapp.common.util.Resource
 import com.exam.storyapp.common.util.StringWrapper
-import com.exam.storyapp.data.source.StoryDataSource
+import com.exam.storyapp.data.source.StoryRemoteMediator
+import com.exam.storyapp.data.source.local.db.StoryDb
 import com.exam.storyapp.data.source.remote.StoryApi
 import com.exam.storyapp.data.source.remote.adapter.NetworkResult
 import com.exam.storyapp.domain.model.Story
@@ -34,6 +33,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -45,17 +45,23 @@ class StoryRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     @IODispatcher private val ioDispatcher: CoroutineDispatcher,
     private val remoteSource: StoryApi,
+    private val localSource: StoryDb,
 ) : StoryRepository {
-
+    @OptIn(ExperimentalPagingApi::class)
     override fun getPagedStories(): Flow<PagingData<Story>> = Pager(
         config = PagingConfig(
             pageSize = Constant.PAGING_PER_PAGE,
-            enablePlaceholders = false,
+        ),
+        remoteMediator = StoryRemoteMediator(
+            remoteSource,
+            localSource,
         ),
         pagingSourceFactory = {
-            StoryDataSource(remoteSource)
+            localSource.storyDao().getStories()
         },
-    ).flow
+    ).flow.map { pagingData ->
+        pagingData.map { it.toDomain() }
+    }
 
     override fun getStories(
         perPage: Int,
