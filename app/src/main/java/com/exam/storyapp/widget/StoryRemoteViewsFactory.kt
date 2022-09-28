@@ -17,13 +17,11 @@ import com.exam.storyapp.common.util.Constant
 import com.exam.storyapp.common.util.Resource
 import com.exam.storyapp.domain.model.Story
 import com.exam.storyapp.domain.repositories.StoryRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
 class StoryRemoteViewsFactory(
     private val context: Context,
-    private val coroutineDispatcher: CoroutineDispatcher,
     private val storyRepository: StoryRepository,
 ) : RemoteViewsService.RemoteViewsFactory {
     private var storyItems = listOf<Story>()
@@ -35,7 +33,7 @@ class StoryRemoteViewsFactory(
     /**
      * TODO (if possible) :Called from Coroutine Scope + SupervisorJob
      */
-    override fun onDataSetChanged() = runBlocking(coroutineDispatcher) {
+    override fun onDataSetChanged() = runBlocking {
         storyItems = when (val result = storyRepository.getStories(10).first()) {
             is Resource.Error -> emptyList()
             is Resource.Success -> {
