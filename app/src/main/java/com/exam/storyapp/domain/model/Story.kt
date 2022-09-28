@@ -23,11 +23,7 @@ data class Story(
     val createAtFormatted: String
         get() {
             return try {
-                DateUtils.getRelativeTimeSpanString(
-                    createdAt,
-                    System.currentTimeMillis(),
-                    DateUtils.MINUTE_IN_MILLIS,
-                ).toString()
+                DateUtils.getRelativeTimeSpanString(createdAt).toString()
             } catch (e: Exception) {
                 e.printStackTrace()
                 ""

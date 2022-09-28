@@ -22,6 +22,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
@@ -31,6 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.exam.storyapp.R
+import com.exam.storyapp.common.extensions.getStyledAppName
 import com.exam.storyapp.common.util.Constant
 import com.exam.storyapp.databinding.FragmentHomeBinding
 import com.exam.storyapp.domain.model.Story
@@ -38,7 +40,6 @@ import com.exam.storyapp.ui.home.adapter.StoryAdapter
 import com.exam.storyapp.ui.home.adapter.StoryLoadStateAdapter
 import com.google.android.material.transition.MaterialElevationScale
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -63,10 +64,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         viewmodel.signOut()
                         true
                     }
-                    R.id.action_map -> {
-                        findNavController().navigate(R.id.action_home_to_storiesMaps)
-                        true
-                    }
                     else -> menuItem.onNavDestinationSelected(findNavController())
                 }
             }
@@ -86,6 +83,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
         binding.apply {
+            topAppBar.title = requireContext().getStyledAppName()
             homeList.run {
                 setLayoutManager()
                 adapter = storyAdapter.withLoadStateFooter(
@@ -100,8 +98,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             topAppBar.addMenuProvider(menuProvider, viewLifecycleOwner, Lifecycle.State.STARTED)
             binding.retryButton.setOnClickListener { storyAdapter.refresh() }
             fab.apply {
-//                setShowMotionSpecResource(R.animator.show_fab)
-//                setHideMotionSpecResource(R.animator.hide_fab)
                 setOnClickListener(::navigateToCreateStory)
             }
         }
@@ -109,16 +105,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewmodel.currentUser.collectLatest {
-                        binding.topAppBar.subtitle = it.name
-                    }
-                }
-                launch {
                     viewmodel.stories.collect {
                         binding.swipeRefreshLayout.isRefreshing = false
-                        val recyclerViewState = binding.homeList.layoutManager?.onSaveInstanceState()
                         storyAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-                        binding.homeList.layoutManager?.onRestoreInstanceState(recyclerViewState)
                     }
                 }
                 launch {
@@ -167,7 +156,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
     }
 
-    private fun onStoryClicked(view: View, story: Story) {
+    private fun onStoryClicked(extras: FragmentNavigator.Extras, story: Story) {
         exitTransition = MaterialElevationScale(false).apply {
             duration = resources.getInteger(R.integer.anim_duration_long).toLong()
             binding.fab.hide()
@@ -176,9 +165,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             duration = resources.getInteger(R.integer.anim_duration_long).toLong()
             binding.fab.show()
         }
-        val extras = FragmentNavigatorExtras(
-            view to getString(R.string.story_card_detail_transition_name),
-        )
         findNavController().navigate(
             resId = R.id.action_home_to_detail,
             args = bundleOf(Constant.KEY_STORY to story),
