@@ -14,7 +14,6 @@ internal abstract class CustomInputEditText constructor(
     attrs: AttributeSet?,
     defStyleAttr: Int,
 ) : TextInputEditText(context, attrs, defStyleAttr) {
-    protected var onInputValidListener: ((String) -> Unit)? = null
 
     final override fun setError(error: CharSequence?) {
         getInputLayout()?.let {
@@ -33,9 +32,5 @@ internal abstract class CustomInputEditText constructor(
             parent = parent.getParent()
         }
         return null
-    }
-
-    fun setInputValidListener(listener: (String) -> Unit) {
-        onInputValidListener = listener
     }
 }

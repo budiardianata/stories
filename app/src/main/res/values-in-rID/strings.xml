@@ -36,7 +36,8 @@
     <string name="saved_error">Gagal Simpan Data</string>
     <string name="empty_error">Data Kosong</string>
     <string name="filter_map">Maksimal Story</string>
-    <string name="location">Lokasi Story</string>
+    <string name="location">Lokasi</string>
     <string name="location_share">Bagikan Lokasi</string>
     <string name="error_location">Lokasi tidak ditemukan</string>
+    <string name="home">Beranda</string>
 </resources>
