@@ -76,9 +76,11 @@ class StoryRepositoryImpl @Inject constructor(
                 emit(Resource.Error(StringWrapper.Resource(R.string.app_name)))
             }
         } catch (e: Exception) {
-            emit(Resource.Error(StringWrapper.Dynamic(e.message ?: "Something went wrong")))
+            e.printStackTrace()
+            emit(Resource.Error(StringWrapper.Dynamic(e.localizedMessage ?: "Something went wrong")))
         }
-    }.flowOn(ioDispatcher)
+    }
+        .flowOn(ioDispatcher)
 
     override suspend fun createStory(
         description: String,
