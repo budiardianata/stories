@@ -7,7 +7,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.exam.storyapp.common.extensions.getProgressDrawable
 import com.google.android.material.button.MaterialButton
 import kotlin.properties.Delegates
 
@@ -19,9 +19,7 @@ class LoadingButton @JvmOverloads constructor(
 ) : MaterialButton(context, attrs, defStyleAttr) {
     private var defaultIcon: Drawable? = icon
     private val progressDrawable by lazy {
-        CircularProgressDrawable(context).apply {
-            setStyle(CircularProgressDrawable.DEFAULT)
-        }
+        context.getProgressDrawable()
     }
 
     var isLoading by Delegates.observable(false) { _, _, newValue ->
@@ -43,7 +41,7 @@ class LoadingButton @JvmOverloads constructor(
             progressDrawable.setColorSchemeColors(
                 attributes.getColor(
                     com.google.android.material.R.styleable.MaterialButton_iconTint,
-                    com.google.android.material.R.attr.colorOnPrimaryContainer,
+                    com.google.android.material.R.attr.colorPrimary,
                 ),
             )
         } finally {

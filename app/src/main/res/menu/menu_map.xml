@@ -2,5 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_filter" android:title="@string/filter_map" android:icon="@drawable/ic_per_page" app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_filter"
+        android:icon="@drawable/ic_filter"
+        android:title="@string/filter_map"
+        app:showAsAction="always" />
 </menu>

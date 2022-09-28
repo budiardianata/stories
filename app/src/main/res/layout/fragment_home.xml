@@ -8,23 +8,19 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
-        style="@style/Widget.Material3.AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="@dimen/dim_8"
         android:fitsSystemWindows="true"
-        app:liftOnScroll="true">
+        app:liftOnScroll="false">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
-            style="@style/Widget.Material3.Toolbar.OnSurface"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="snapMargins|enterAlways"
-            app:navigationIcon="@drawable/ic_user"
-            app:subtitleCentered="true"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="enterAlways|snap"
             app:title="@string/app_name"
-            app:titleCentered="true" />
+            app:titleTextAppearance="?attr/textAppearanceTitleLarge" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -38,7 +34,6 @@
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +43,6 @@
                 android:id="@+id/home_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/dim_8"
                 android:transitionGroup="true"
                 tools:listitem="@layout/item_story" />
 

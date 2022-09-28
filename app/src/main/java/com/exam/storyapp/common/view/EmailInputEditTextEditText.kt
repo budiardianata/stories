@@ -21,7 +21,6 @@ internal class EmailInputEditTextEditText @JvmOverloads constructor(
             if (text.isNullOrEmpty().not() && text.toString().isEmailValid().not()) {
                 this.error = resources.getString(R.string.email_invalid)
             } else {
-                onInputValidListener?.invoke(text.toString())
                 this.error = null
             }
         }

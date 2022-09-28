@@ -80,15 +80,15 @@ class StoriesMapsFragment : Fragment(R.layout.fragment_stories_maps) {
         binding.setUpToolbar()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         val mapFragment = binding.mapFragment.getFragment<SupportMapFragment>()
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            googleMap = mapFragment.awaitMap()
+            googleMap.setupStyle()
+            viewmodel.dispatchEvent(StoriesMapEvent.MapReady)
+            setupCluster()
+            googleMap.awaitMapLoad()
+        }
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    googleMap = mapFragment.awaitMap()
-                    googleMap.setupStyle()
-                    viewmodel.dispatchEvent(StoriesMapEvent.MapReady)
-                    setupCluster()
-                    googleMap.awaitMapLoad()
-                }
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 launch {
                     viewmodel.stories.collect {
                         when (it) {
@@ -142,10 +142,7 @@ class StoriesMapsFragment : Fragment(R.layout.fragment_stories_maps) {
                 R.raw.map_style,
             ),
         )
-        uiSettings.apply {
-            isZoomControlsEnabled = true
-            isMapToolbarEnabled = true
-        }
+        uiSettings.isMapToolbarEnabled = true
     }
 
     private fun setupCluster() {
@@ -198,13 +195,13 @@ class StoriesMapsFragment : Fragment(R.layout.fragment_stories_maps) {
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation() {
         locationPermissionLauncher.launch(::handleRationalePermission, ::handleDeniedPermission) {
-            googleMap.isMyLocationEnabled = true
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                if (location != null) {
-                    currentLocation = LatLng(location.latitude, location.longitude)
+                currentLocation = if (location != null) {
+                    googleMap.isMyLocationEnabled = true
+                    LatLng(location.latitude, location.longitude)
+                } else {
+                    LatLng(-6.175221730207895, 106.82718498421391)
                 }
-            }.addOnFailureListener {
-                currentLocation = LatLng(-6.175221730207895, 106.82718498421391)
             }
         }
     }

@@ -1,13 +1,22 @@
 <resources>
     <string name="app_name" translatable="false">Story App</string>
-    <string name="story_card_item_transition_name" translatable="false">story_card_%1$s</string>
     <string name="add_story_transition" translatable="false">story_new</string>
+    <string name="story_card_item_transition_name" translatable="false">story_card_%1$s</string>
+    <string name="story_image_item_transition_name" translatable="false">story_image_%1$s</string>
+    <string name="story_name_item_transition_name" translatable="false">story_name_%1$s</string>
+    <string name="story_date_item_transition_name" translatable="false">story_date_%1$s</string>
+    <string name="story_desc_item_transition_name" translatable="false">story_desc_%1$s</string>
     <string name="story_card_detail_transition_name" translatable="false">story_card_detail</string>
+    <string name="story_image_detail_transition_name" translatable="false">story_image_detail</string>
+    <string name="story_name_detail_transition_name" translatable="false">story_name_detail</string>
+    <string name="story_date_detail_transition_name" translatable="false">story_date_detail</string>
+    <string name="story_desc_detail_transition_name" translatable="false">story_desc_detail</string>
+
     <string name="password">Password</string>
     <string name="password_placeholder">Input Password</string>
     <plurals name="password_min_length">
-        <item quantity="one" formatted="true">Password must be at least than %1$d character</item>
-        <item quantity="other" formatted="true">Password must be at least than %1$d characters</item>
+        <item formatted="true" quantity="one">Password must be at least than %1$d character</item>
+        <item formatted="true" quantity="other">Password must be at least than %1$d characters</item>
     </plurals>
     <string name="email_invalid">Email address is not valid.</string>
     <string name="login">Sign In</string>
@@ -40,6 +49,8 @@
     <string name="add_an_image">Add an Image</string>
     <string name="app_widget_description">This is an app widget description</string>
     <string name="filter_map">Max Show Story</string>
-    <string name="location">Story By Location</string>
+    <string name="location">Location</string>
     <string name="location_share">Share Location</string>
+    <string name="error_location">Location Not Found</string>
+    <string name="home">Home</string>
 </resources>

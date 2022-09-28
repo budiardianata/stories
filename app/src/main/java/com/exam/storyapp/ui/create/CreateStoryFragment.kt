@@ -25,6 +25,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.exam.storyapp.R
 import com.exam.storyapp.common.extensions.*
@@ -37,7 +39,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -59,6 +60,17 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
     }
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            drawingViewId = R.id.nav_host_fragment
+            startDelay = resources.getInteger(R.integer.anim_duration_short).toLong()
+            duration = resources.getInteger(R.integer.anim_duration_long).toLong()
+            scrimColor = Color.TRANSPARENT
+            setAllContainerColors(requireContext().themeColor(com.google.android.material.R.attr.colorSurface))
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setFragmentResultListener(Constant.REQ_IMAGE) { _, bundle ->
@@ -66,24 +78,15 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
                 viewmodel.dispatchEvent(CreateStoryEvent.AddImage(it))
             }
         }
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         binding.run {
-            buttonAdd.setOnClickListener {
-                viewmodel.dispatchEvent(CreateStoryEvent.Save)
-            }
-            addImageChooser.setOnClickListener {
-                showMenu(it, R.menu.menu_add_image)
-            }
-            close.setOnClickListener { findNavController().navigateUp() }
+            toolbarDetail.setupWithNavController(navController, appBarConfiguration)
+            buttonAdd.setOnClickListener { viewmodel.dispatchEvent(CreateStoryEvent.Save) }
+            addImageChooser.setOnClickListener { showMenu(it, R.menu.menu_add_image) }
             edAddDescription.doAfterTextChanged {
                 viewmodel.dispatchEvent(CreateStoryEvent.AddDescription(it.toString()))
-            }
-            sharedElementEnterTransition = MaterialContainerTransform().apply {
-                drawingViewId = R.id.nav_host_fragment
-                duration = resources.getInteger(R.integer.anim_duration_long).toLong()
-                scrimColor = Color.TRANSPARENT
-                setPathMotion(MaterialArcMotion())
-                setAllContainerColors(requireContext().themeColor(com.google.android.material.R.attr.colorSurface))
             }
             switchShareLocation.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (buttonView.isPressed) {
@@ -124,12 +127,29 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation(callback: (location: LatLng) -> Unit) {
         locationPermissionLauncher.launch(::handleRationale, ::handleDenied) {
-            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                if (location != null) {
-                    callback(LatLng(location.latitude, location.longitude))
+            fusedLocationClient.locationAvailability.addOnSuccessListener { locationAvailability ->
+                if (locationAvailability.isLocationAvailable) {
+                    fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                        location?.let {
+                            callback(LatLng(it.latitude, it.longitude))
+                        } ?: run {
+                            showErrorLocation()
+                        }
+                    }
+                } else {
+                    showErrorLocation()
                 }
             }
         }
+    }
+
+    private fun showErrorLocation() {
+        Toast.makeText(
+            requireContext(),
+            requireContext().getString(R.string.error_location),
+            Toast.LENGTH_SHORT,
+        ).show()
+        binding.switchShareLocation.isChecked = false
     }
 
     private fun FragmentCreateStoryBinding.formEnable(isEnable: Boolean) {

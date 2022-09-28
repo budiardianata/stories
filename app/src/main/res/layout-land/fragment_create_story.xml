@@ -9,53 +9,29 @@
     android:transitionName="@string/add_story_transition"
     tools:context=".ui.create.CreateStoryFragment">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="?attr/actionBarSize"
-        tools:viewBindingIgnore='true' />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/close"
-        style="@style/Widget.Material3.Button.IconButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dim_8"
-        android:contentDescription="@string/back"
-        app:icon="@drawable/ic_close"
-        app:layout_constraintBottom_toBottomOf="@id/subject_edit_text"
-        app:layout_constraintEnd_toStartOf="@id/subject_edit_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/subject_edit_text" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/subject_edit_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:text="@string/create_new"
-        android:textAlignment="center"
-        android:textAppearance="?attr/textAppearanceHeadline5"
-        app:layout_constraintBottom_toTopOf="@id/guideline_top"
-        app:layout_constraintEnd_toStartOf="@id/button_add"
-        app:layout_constraintStart_toEndOf="@id/close"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.exam.storyapp.common.view.LoadingButton
-        android:id="@+id/button_add"
-        style="@style/Widget.Material3.Button.IconButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dim_8"
-        android:contentDescription="@string/send_story"
-        android:focusable="true"
-        app:icon="@drawable/ic_send"
-        app:layout_constraintBottom_toBottomOf="@id/subject_edit_text"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarDetail"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/subject_edit_text"
-        app:layout_constraintTop_toTopOf="@id/subject_edit_text" />
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_close"
+        app:title="@string/create_new"
+        app:titleCentered="true">
+
+        <com.exam.storyapp.common.view.LoadingButton
+            android:id="@+id/button_add"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/dim_8"
+            android:contentDescription="@string/send_story"
+            android:enabled="false"
+            android:focusable="true"
+            app:icon="@drawable/ic_send" />
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/lay_description"
@@ -68,7 +44,7 @@
         app:layout_constraintBottom_toTopOf="@id/lay_share_location"
         app:layout_constraintEnd_toStartOf="@id/preview_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_top"
+        app:layout_constraintTop_toBottomOf="@id/toolbarDetail"
         app:placeholderText="@string/write_story">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -82,19 +58,20 @@
             android:scrollbars="vertical" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/lay_share_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
         android:gravity="center_vertical"
         android:maxHeight="?attr/actionBarSize"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/dim_8"
-        app:layout_constraintEnd_toEndOf="@+id/lay_description"
-        app:layout_constraintStart_toStartOf="@+id/lay_description"
-        app:layout_constraintTop_toBottomOf="@id/lay_description"
         app:layout_constraintBottom_toTopOf="@id/add_image_chooser"
-        android:foreground="?attr/selectableItemBackground">
+        app:layout_constraintEnd_toEndOf="@id/lay_description"
+        app:layout_constraintStart_toStartOf="@id/lay_description"
+        app:layout_constraintTop_toBottomOf="@id/lay_description">
 
         <ImageView
             android:layout_width="28dp"
@@ -107,12 +84,13 @@
             android:id="@+id/switch_share_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="@dimen/dim_8"
             android:text="@string/location_share"
             android:textColor="?attr/colorPrimary"
-            android:textSize="16sp"
-            android:paddingStart="@dimen/dim_8"
-            android:layout_weight="1"/>
+            android:textSize="16sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_image_chooser"
         style="@style/Widget.Material3.Button.TextButton.Icon"
@@ -135,9 +113,10 @@
         android:id="@+id/preview_image"
         android:layout_width="@dimen/dim_0"
         android:layout_height="@dimen/dim_0"
+        android:layout_marginVertical="@dimen/dim_16"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/lay_description"
-        app:layout_constraintTop_toBottomOf="@id/guideline_top" />
+        app:layout_constraintTop_toBottomOf="@id/toolbarDetail" />
 </androidx.constraintlayout.widget.ConstraintLayout>
