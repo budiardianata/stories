@@ -1,0 +1,51 @@
+{
+  "error": false,
+  "message": "Stories fetched successfully",
+  "listStory": [
+    {
+      "id": "story-O8110bFn3StKHPxF",
+      "name": "tgh",
+      "description": "location",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1664441542177_nrBchnyi.jpg",
+      "createdAt": "2022-09-29T08:52:22.179Z",
+      "lat": -6.2784307,
+      "lon": 106.8292903
+    },
+    {
+      "id": "story-HPubvmuMk5EHyq2k",
+      "name": "fyn",
+      "description": "Hello",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1664433894717_bfJZX3D5.jpg",
+      "createdAt": "2022-09-29T06:44:54.719Z",
+      "lat": 37.421997,
+      "lon": -122.084
+    },
+    {
+      "id": "story-HDh4Vka7_TZJAKQ-",
+      "name": "modul1",
+      "description": "kmkkkk",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1664417471667_0h4vUekD.jpg",
+      "createdAt": "2022-09-29T02:11:11.669Z",
+      "lat": -7.46343,
+      "lon": 112.4317533
+    },
+    {
+      "id": "story-aDkOoSfsXrL-AhA2",
+      "name": "fyn",
+      "description": "ss",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1664415775695_efuFe-ON.jpg",
+      "createdAt": "2022-09-29T01:42:55.697Z",
+      "lat": 2,
+      "lon": 2
+    },
+    {
+      "id": "story-33c5PffzroMY4h5k",
+      "name": "berkah",
+      "description": "hmmm",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1664386769067_KJqT-v1i.jpg",
+      "createdAt": "2022-09-28T17:39:29.068Z",
+      "lat": -7.7597684,
+      "lon": 110.4154974
+    }
+  ]
+}

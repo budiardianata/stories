@@ -1,0 +1,9 @@
+{
+  "error": false,
+  "message": "success",
+  "loginResult": {
+    "userId": "user-or7gXNO-HTAEnZE-",
+    "name": "sample",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLW9yN2dYTk8tSFRBRW5aRS0iLCJpYXQiOjE2NjQ0Mzk0MzR9.KpTpHD-ANfmPdTGtN-sjlwGm3J2_Skiw7AaYxZDcgBs"
+  }
+}
