@@ -6,15 +6,9 @@ package com.exam.storyapp.common.util
 object Constant {
     private const val packageName = "com.exam.storyapp"
 
-    const val API_URL = "https://story-api.dicoding.dev/v1/"
-    const val KEY_EMAIL = "email"
-    const val KEY_DESCRIPTIONS = "descriptions"
     const val KEY_IMAGE = "image"
-    const val KEY_NAME = "name"
-    const val KEY_PASSWORD = "password"
     const val KEY_REFRESH = "refresh"
     const val KEY_STORY = "story"
-    const val KEY_LOCATION = "location"
     const val PAGING_INITIAL_PAGE = 1
     const val PAGING_PER_PAGE = 5
     const val PASSWORD_MIN = 6
