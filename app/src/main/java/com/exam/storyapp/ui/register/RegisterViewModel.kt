@@ -3,13 +3,13 @@
  */
 package com.exam.storyapp.ui.register
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.exam.storyapp.R
 import com.exam.storyapp.common.extensions.isEmailValid
 import com.exam.storyapp.common.extensions.isPasswordValid
-import com.exam.storyapp.common.util.Constant
 import com.exam.storyapp.common.util.Resource
+import com.exam.storyapp.common.util.StringWrapper
 import com.exam.storyapp.domain.model.FormState
 import com.exam.storyapp.domain.model.UiState
 import com.exam.storyapp.domain.repositories.UserRepository
@@ -20,19 +20,18 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
     private val userRepository: UserRepository,
 ) : ViewModel() {
-    private val name = savedStateHandle.getStateFlow(Constant.KEY_NAME, "")
-    private val email = savedStateHandle.getStateFlow(Constant.KEY_EMAIL, "")
-    private val password = savedStateHandle.getStateFlow(Constant.KEY_PASSWORD, "")
+    private val name = MutableStateFlow("")
+    private val email = MutableStateFlow("")
+    private val password = MutableStateFlow("")
 
     private val _formState = MutableStateFlow<FormState>(FormState.Validating(false))
     val formState = _formState.asStateFlow()
 
     init {
         combine(name, email, password) { name, email, password ->
-            val isValid = name.isNotBlank() && email.isEmailValid() && password.isPasswordValid()
+            val isValid = name.isNotEmpty() && email.isEmailValid() && password.isPasswordValid()
             _formState.update { FormState.Validating(isValid) }
         }.launchIn(viewModelScope)
     }
@@ -40,27 +39,28 @@ class RegisterViewModel @Inject constructor(
     fun dispatchEvent(event: RegisterEvent) {
         viewModelScope.launch {
             when (event) {
-                is RegisterEvent.EmailChange -> savedStateHandle[Constant.KEY_EMAIL] = event.email
-                is RegisterEvent.NameChange -> savedStateHandle[Constant.KEY_NAME] = event.name
-                is RegisterEvent.PasswordChange -> savedStateHandle[Constant.KEY_PASSWORD] =
-                    event.password
+                is RegisterEvent.EmailChange -> email.update { event.email }
+                is RegisterEvent.NameChange -> name.update { event.name }
+                is RegisterEvent.PasswordChange -> password.update { event.password }
                 RegisterEvent.Register -> performSignUp()
             }
         }
     }
 
     private fun performSignUp() {
+        _formState.update { FormState.Submit(UiState.Loading()) }
         viewModelScope.launch {
-            _formState.update { FormState.Submit(UiState.Loading()) }
-            when (
-                val status = userRepository.signUp(
-                    email = email.value,
-                    password = password.value,
-                    name = name.value,
-                )
-            ) {
-                is Resource.Error -> _formState.update { FormState.Submit(UiState.Error(status.exception)) }
-                is Resource.Success -> _formState.update { FormState.Submit(UiState.Success(status.data)) }
+            if (name.value.isNotEmpty() && email.value.isEmailValid() && password.value.isPasswordValid()) {
+                when (val status = userRepository.signUp(name.value, email.value, password.value)) {
+                    is Resource.Error -> _formState.update { FormState.Submit(UiState.Error(status.exception)) }
+                    is Resource.Success -> _formState.update {
+                        FormState.Submit(UiState.Success(status.data))
+                    }
+                }
+            } else {
+                _formState.update {
+                    FormState.Submit(UiState.Error(StringWrapper.Resource(R.string.input_invalid)))
+                }
             }
         }
     }
