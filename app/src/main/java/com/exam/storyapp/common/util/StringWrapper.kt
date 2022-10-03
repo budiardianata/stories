@@ -8,12 +8,12 @@ import androidx.annotation.StringRes
 
 sealed class StringWrapper {
     data class Dynamic(val value: String) : StringWrapper()
-    class Resource(@StringRes val resId: Int, vararg val args: Any) : StringWrapper()
+    data class Resource(@StringRes val resId: Int) : StringWrapper()
 
     fun toString(context: Context): String {
         return when (this) {
             is Dynamic -> value
-            is Resource -> context.getString(resId, *args)
+            is Resource -> context.getString(resId)
         }
     }
 }
