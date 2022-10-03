@@ -3,12 +3,12 @@
  */
 package com.exam.storyapp.domain.repositories
 
-import android.net.Uri
 import androidx.paging.PagingData
 import com.exam.storyapp.common.util.Constant
 import com.exam.storyapp.common.util.Resource
 import com.exam.storyapp.domain.model.Story
 import com.google.android.gms.maps.model.LatLng
+import java.io.File
 import kotlinx.coroutines.flow.Flow
 
 interface StoryRepository {
@@ -19,5 +19,5 @@ interface StoryRepository {
         withLocation: Boolean = false,
     ): Flow<Resource<List<Story>>>
 
-    suspend fun createStory(description: String, image: Uri, location: LatLng?): Resource<String>
+    suspend fun createStory(description: String, image: File, location: LatLng?): Resource<String>
 }
