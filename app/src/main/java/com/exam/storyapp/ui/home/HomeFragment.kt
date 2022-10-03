@@ -11,12 +11,11 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
 import androidx.core.view.doOnPreDraw
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -26,11 +25,11 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.exam.storyapp.MainViewModel
 import com.exam.storyapp.R
 import com.exam.storyapp.common.extensions.getStyledAppName
 import com.exam.storyapp.common.util.Constant
@@ -46,7 +45,9 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding by viewBinding(FragmentHomeBinding::bind)
     private val viewmodel by viewModels<HomeViewModel>()
+    private val activityViewModel by activityViewModels<MainViewModel>()
     private val storyAdapter by lazy { StoryAdapter(::onStoryClicked) }
+    private val navController by lazy { findNavController() }
 
     private val menuProvider by lazy {
         object : MenuProvider {
@@ -61,10 +62,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         true
                     }
                     R.id.action_logout -> {
-                        viewmodel.signOut()
+                        activityViewModel.logOut()
                         true
                     }
-                    else -> menuItem.onNavDestinationSelected(findNavController())
+                    else -> menuItem.onNavDestinationSelected(navController)
                 }
             }
         }
@@ -101,6 +102,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 setOnClickListener(::navigateToCreateStory)
             }
         }
+//        viewLifecycleOwner.lifecycleScope.launch{
+//            activityViewModel.isLogin.flowWithLifecycle(lifecycle, Lifecycle.State.CREATED).collect { isLogin ->
+//                if (!isLogin) {
+//                    findNavController().navigate(R.id.action_global_loginFragment)
+//                }
+//            }
+//        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -110,39 +118,39 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         storyAdapter.submitData(viewLifecycleOwner.lifecycle, it)
                     }
                 }
-                launch {
-                    storyAdapter.loadStateFlow.collect { loadState ->
-                        // Only show the list if refresh succeeds.
-                        val isListEmpty =
-                            loadState.refresh is LoadState.NotLoading && storyAdapter.itemCount == 0
-                        binding.run {
-                            // show empty list
-                            errorMsg.isVisible = isListEmpty
-                            // Only show the list if refresh succeeds.
-                            homeList.isVisible = !isListEmpty
-                            // Show loading spinner during initial load or refresh.
-                            progressBar.isVisible = loadState.source.refresh is LoadState.Loading
-                            // Show the retry state if initial load or refresh fails.
-                            retryButton.isVisible =
-                                loadState.source.refresh is LoadState.Error && storyAdapter.itemCount == 0
-                            errorMsg.isVisible = retryButton.isVisible
-                            // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
-                            val errorState = loadState.source.append as? LoadState.Error
-                                ?: loadState.source.prepend as? LoadState.Error
-                                ?: loadState.append as? LoadState.Error
-                                ?: loadState.prepend as? LoadState.Error
-
-                            errorState?.let {
-                                errorMsg.text = it.error.localizedMessage ?: it.error.message
-                                Toast.makeText(
-                                    requireContext(),
-                                    "\uD83D\uDE28 Wooops ${it.error}",
-                                    Toast.LENGTH_LONG,
-                                ).show()
-                            }
-                        }
-                    }
-                }
+//                launch {
+//                    storyAdapter.loadStateFlow.collect { loadState ->
+//                        // Only show the list if refresh succeeds.
+//                        val isListEmpty =
+//                            loadState.refresh is LoadState.NotLoading && storyAdapter.itemCount == 0
+//                        binding.run {
+//                            // show empty list
+//                            errorMsg.isVisible = isListEmpty
+//                            // Only show the list if refresh succeeds.
+//                            homeList.isVisible = !isListEmpty
+//                            // Show loading spinner during initial load or refresh.
+//                            progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+//                            // Show the retry state if initial load or refresh fails.
+//                            retryButton.isVisible =
+//                                loadState.source.refresh is LoadState.Error && storyAdapter.itemCount == 0
+//                            errorMsg.isVisible = retryButton.isVisible
+//                            // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
+//                            val errorState = loadState.source.append as? LoadState.Error
+//                                ?: loadState.source.prepend as? LoadState.Error
+//                                ?: loadState.append as? LoadState.Error
+//                                ?: loadState.prepend as? LoadState.Error
+//
+//                            errorState?.let {
+//                                errorMsg.text = it.error.localizedMessage ?: it.error.message
+//                                Toast.makeText(
+//                                    requireContext(),
+//                                    "\uD83D\uDE28 Wooops ${it.error}",
+//                                    Toast.LENGTH_LONG,
+//                                ).show()
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
     }
@@ -165,7 +173,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             duration = resources.getInteger(R.integer.anim_duration_long).toLong()
             binding.fab.show()
         }
-        findNavController().navigate(
+        navController.navigate(
             resId = R.id.action_home_to_detail,
             args = bundleOf(Constant.KEY_STORY to story),
             navOptions = null,
@@ -177,6 +185,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val extras = FragmentNavigatorExtras(
             view to getString(R.string.add_story_transition),
         )
-        findNavController().navigate(R.id.action_home_to_add, null, null, extras)
+        navController.navigate(R.id.action_home_to_add, null, null, extras)
     }
 }
