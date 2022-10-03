@@ -12,7 +12,7 @@ import com.exam.storyapp.data.model.RemoteKeys
 @Dao
 interface RemoteKeysDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(remoteKey: List<RemoteKeys>)
+    suspend fun insert(remoteKey: List<RemoteKeys>): LongArray
 
     @Query("SELECT * FROM remote_keys WHERE id = :id")
     suspend fun getById(id: String): RemoteKeys?
