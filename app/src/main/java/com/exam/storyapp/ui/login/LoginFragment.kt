@@ -6,6 +6,7 @@ package com.exam.storyapp.ui.login
 import android.animation.AnimatorSet
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -66,6 +67,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                                 }
                                 is UiState.Success -> {
                                     binding.formEnable(true)
+                                    Toast.makeText(
+                                        requireContext(),
+                                        state.data,
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
                                 }
                             }
                         }
