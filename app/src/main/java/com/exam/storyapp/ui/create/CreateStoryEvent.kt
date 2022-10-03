@@ -3,12 +3,12 @@
  */
 package com.exam.storyapp.ui.create
 
-import android.net.Uri
 import com.google.android.gms.maps.model.LatLng
+import java.io.File
 
 sealed class CreateStoryEvent {
     data class AddDescription(val message: String) : CreateStoryEvent()
-    data class AddImage(val image: Uri?) : CreateStoryEvent()
+    data class AddImage(val image: File?) : CreateStoryEvent()
     data class AddLocation(val location: LatLng?) : CreateStoryEvent()
-    object Save : CreateStoryEvent()
+    object CreateStory : CreateStoryEvent()
 }

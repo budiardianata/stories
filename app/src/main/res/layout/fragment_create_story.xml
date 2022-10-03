@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingStart="@dimen/dim_8"
+            android:layout_marginStart="@dimen/dim_8"
             android:text="@string/location_share"
             android:textColor="?attr/colorPrimary"
             android:textSize="16sp" />

@@ -3,30 +3,28 @@
  */
 package com.exam.storyapp.ui.create
 
-import android.net.Uri
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.exam.storyapp.common.util.Constant
+import com.exam.storyapp.R
+import com.exam.storyapp.common.util.StringWrapper
 import com.exam.storyapp.domain.model.FormState
 import com.exam.storyapp.domain.model.UiState
 import com.exam.storyapp.domain.repositories.StoryRepository
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.File
 import javax.inject.Inject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class CreateStoryViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
-    private val storyRepository: dagger.Lazy<StoryRepository>,
+    private val storyRepository: StoryRepository,
 ) : ViewModel() {
 
-    private val description = savedStateHandle.getStateFlow(Constant.KEY_DESCRIPTIONS, "")
-    val image = savedStateHandle.getStateFlow<Uri?>(Constant.KEY_IMAGE, null)
-    val location = savedStateHandle.getStateFlow<LatLng?>(Constant.KEY_LOCATION, null)
-
+    private val description = MutableStateFlow("")
+    private val location = MutableStateFlow<LatLng?>(null)
+    private val image = MutableStateFlow<File?>(null)
     private val _formState = MutableStateFlow<FormState>(FormState.Validating())
 
     val formState = _formState.asStateFlow()
@@ -39,11 +37,10 @@ class CreateStoryViewModel @Inject constructor(
 
     fun dispatchEvent(event: CreateStoryEvent) {
         when (event) {
-            is CreateStoryEvent.AddDescription -> savedStateHandle[Constant.KEY_DESCRIPTIONS] =
-                event.message
-            is CreateStoryEvent.AddImage -> savedStateHandle[Constant.KEY_IMAGE] = event.image
-            is CreateStoryEvent.AddLocation -> savedStateHandle[Constant.KEY_LOCATION] = event.location
-            CreateStoryEvent.Save -> submitStory()
+            is CreateStoryEvent.AddDescription -> description.update { event.message }
+            is CreateStoryEvent.AddImage -> image.update { event.image }
+            is CreateStoryEvent.AddLocation -> location.update { event.location }
+            CreateStoryEvent.CreateStory -> submitStory()
         }
     }
 
@@ -51,8 +48,18 @@ class CreateStoryViewModel @Inject constructor(
         viewModelScope.launch {
             if (description.value.isNotBlank() && image.value != null) {
                 _formState.update { FormState.Submit(UiState.Loading()) }
-                val result = storyRepository.get().createStory(description.value, image.value!!, location.value)
+                val result = storyRepository.createStory(
+                    description.value,
+                    image.value!!,
+                    location.value,
+                )
                 _formState.update { FormState.Submit(UiState.fromResource(result)) }
+            } else {
+                _formState.update {
+                    FormState.Submit(
+                        UiState.Error(StringWrapper.Resource(R.string.input_invalid)),
+                    )
+                }
             }
         }
     }
