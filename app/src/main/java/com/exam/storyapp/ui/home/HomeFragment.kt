@@ -14,6 +14,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
@@ -25,6 +26,7 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -118,39 +120,28 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         storyAdapter.submitData(viewLifecycleOwner.lifecycle, it)
                     }
                 }
-//                launch {
-//                    storyAdapter.loadStateFlow.collect { loadState ->
-//                        // Only show the list if refresh succeeds.
-//                        val isListEmpty =
-//                            loadState.refresh is LoadState.NotLoading && storyAdapter.itemCount == 0
-//                        binding.run {
-//                            // show empty list
-//                            errorMsg.isVisible = isListEmpty
-//                            // Only show the list if refresh succeeds.
-//                            homeList.isVisible = !isListEmpty
-//                            // Show loading spinner during initial load or refresh.
-//                            progressBar.isVisible = loadState.source.refresh is LoadState.Loading
-//                            // Show the retry state if initial load or refresh fails.
-//                            retryButton.isVisible =
-//                                loadState.source.refresh is LoadState.Error && storyAdapter.itemCount == 0
-//                            errorMsg.isVisible = retryButton.isVisible
-//                            // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
-//                            val errorState = loadState.source.append as? LoadState.Error
-//                                ?: loadState.source.prepend as? LoadState.Error
-//                                ?: loadState.append as? LoadState.Error
-//                                ?: loadState.prepend as? LoadState.Error
-//
-//                            errorState?.let {
-//                                errorMsg.text = it.error.localizedMessage ?: it.error.message
-//                                Toast.makeText(
-//                                    requireContext(),
-//                                    "\uD83D\uDE28 Wooops ${it.error}",
-//                                    Toast.LENGTH_LONG,
-//                                ).show()
-//                            }
-//                        }
-//                    }
-//                }
+                launch {
+                    storyAdapter.loadStateFlow.collect { loadState ->
+                        // Only show the list if refresh succeeds.
+//                        val isListEmpty = loadState.refresh is LoadState.NotLoading && storyAdapter.itemCount == 0
+                        val isListEmpty = (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && storyAdapter.itemCount == 0) || loadState.source.refresh is LoadState.Error
+                        binding.run {
+                            // show empty list
+                            errorMsg.isVisible = isListEmpty
+                            homeList.isVisible = !isListEmpty
+                            progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+                            retryButton.isVisible = loadState.source.refresh is LoadState.Error && storyAdapter.itemCount == 0
+                            errorMsg.isVisible = retryButton.isVisible
+                            if (isListEmpty) {
+                                val errorState = loadState.source.append as? LoadState.Error
+                                    ?: loadState.source.prepend as? LoadState.Error
+                                    ?: loadState.append as? LoadState.Error
+                                    ?: loadState.prepend as? LoadState.Error
+                                errorState?.let { errorMsg.text = it.error.localizedMessage ?: it.error.message }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
