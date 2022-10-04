@@ -4,6 +4,7 @@
 package com.exam.storyapp.data.source.local.db
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.filters.MediumTest
 import com.exam.storyapp.common.utils.FakerProvider
 import com.exam.storyapp.data.model.RemoteKeys
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -19,6 +20,7 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 @HiltAndroidTest
+@MediumTest
 class StoryDbTest {
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
@@ -58,7 +60,7 @@ class StoryDbTest {
 
         database.remoteKeysDao().insert(given)
 
-        val actualResult = database.remoteKeysDao().getById("4")
+        val actualResult = database.remoteKeysDao().getById(expectedResult.id)
         assertEquals(expectedResult, actualResult)
     }
 
