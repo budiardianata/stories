@@ -70,6 +70,10 @@ android {
     }
 }
 
+hilt {
+    enableAggregatingTask = true
+}
+
 dependencies {
     coreLibraryDesugaring libs.desugar
     implementation libs.core.ktx
@@ -107,6 +111,7 @@ dependencies {
     androidTestImplementation libs.bundles.okhttp3.test
     androidTestImplementation libs.hilt.android.test
     kaptAndroidTest libs.hilt.compiler.test
+    debugImplementation libs.fragment.test
 }
 
 spotless {
