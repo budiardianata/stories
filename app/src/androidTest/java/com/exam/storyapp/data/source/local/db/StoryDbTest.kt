@@ -48,6 +48,7 @@ class StoryDbTest {
 
         assertEquals(given.size, insertedKey.size)
         assertEquals(given.size, insertedStory.size)
+        assertEquals(insertedKey.size, insertedStory.size)
     }
 
     @Test
