@@ -20,7 +20,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.ShapeAppearanceModel
-import com.google.android.material.shape.TriangleEdgeTreatment
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
 
@@ -73,10 +72,8 @@ class StoryRenderer(
     override fun onClusterItemRendered(clusterItem: Story, marker: Marker) {
         getBitmap(context, clusterItem.image) {
             layout.markerImage.setImageDrawable(it)
-            val size = context.resources.getDimension(R.dimen.dim_8)
             val shapePathModel = ShapeAppearanceModel.builder()
                 .setAllCorners(CornerFamily.ROUNDED, 30.toFloat())
-                .setBottomEdge(TriangleEdgeTreatment(size, false))
                 .build()
             layout.markerImage.shapeAppearanceModel = shapePathModel
             marker.setIcon(layout.toBitmapDescriptor())
