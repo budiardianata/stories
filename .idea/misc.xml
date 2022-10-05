@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EntryPointsManager">
+    <entry_points version="2.0">
+      <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/app/src/main/java/com/exam/storyapp/common/extensions/ActivityExtensions.kt" />
+      <entry_point TYPE="method" FQNAME="com.exam.storyapp.common.extensions.ActivityExtensionsKt android.net.Uri getUriProvider(android.app.Activity $this$getUriProvider, java.io.File file)" />
+      <entry_point TYPE="method" FQNAME="com.exam.storyapp.common.extensions.ActivityExtensionsKt void hideKeyboard(android.app.Activity $this$hideKeyboard)" />
+      <entry_point TYPE="method" FQNAME="com.exam.storyapp.common.extensions.ActivityExtensionsKt T parcelable(android.os.Bundle $this$parcelable, java.lang.String key)" />
+      <entry_point TYPE="method" FQNAME="com.exam.storyapp.common.extensions.ActivityExtensionsKt T parcelable(android.content.Intent $this$parcelable, java.lang.String key)" />
+      <entry_point TYPE="method" FQNAME="com.exam.storyapp.common.extensions.ActivityExtensionsKt void showSnackbarText(android.app.Activity $this$showSnackbar, java.lang.String message, int length, kotlin.jvm.functions.Function1&lt;? super com.google.android.material.snackbar.Snackbar,kotlin.Unit&gt; f)" />
+    </entry_points>
+    <pattern value="com.exam.storyapp.ui.camera.CameraFragment" method="takePicture" />
+    <pattern value="com.exam.storyapp.ui.camera.CameraFragment" method="startCamera" />
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

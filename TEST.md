@@ -262,6 +262,7 @@
    - click on `loginbutton` and wait until success
    - Make sure current destination is `homeFragment`
    - Make sure `homeList` is displayed.
+   - perform `logout` and make sure current destination is `loginFragment`
 
 2. End-to-End: Application Flow
    this test is when user open app than have session **(Authenticated)**

@@ -3,23 +3,11 @@
  */
 package com.exam.storyapp.common.extensions
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
-import android.net.Uri
 import androidx.exifinterface.media.ExifInterface
 import java.io.File
-
-@JvmName("copyToCachedFile")
-fun Uri.copyToCachedFile(context: Context, extension: String): File {
-    val tempFile = File(context.cacheDir, "${System.currentTimeMillis()}.$extension")
-    tempFile.createNewFile()
-    context.contentResolver.openInputStream(this).use { input ->
-        input?.copyTo(tempFile.outputStream())
-    }
-    return tempFile
-}
 
 @JvmName("decodeSampledBitmap")
 fun File.decodeSampledBitmap(width: Int, height: Int): Bitmap {
