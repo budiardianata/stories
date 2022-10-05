@@ -5,10 +5,12 @@
     <item
         android:id="@+id/action_language"
         android:icon="@drawable/ic_language"
-        android:title="@string/language" />
+        android:title="@string/language"
+        android:contentDescription="@string/language"/>
 
     <item
         android:id="@+id/action_logout"
         android:icon="@drawable/ic_logout"
-        android:title="@string/logout" />
+        android:title="@string/logout"
+        android:contentDescription="@string/logout"/>
 </menu>
