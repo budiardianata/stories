@@ -9,6 +9,9 @@ on:
       MAP_API_KEY:
         description: 'A map key from the caller workflow'
         required: true
+      BASE_URL:
+        description: 'A base url api endpoint'
+        required: true
 
 jobs:
   build:
@@ -27,7 +30,7 @@ jobs:
           java-version: 11
 
       - name: Add Key from Secrets
-        run: echo mapApiKey="${{ secrets.MAP_API_KEY }}" > ./local.properties
+        run: echo -e "mapApiKey=${{secrets.MAP_API_KEY}}\nBASE_URL=${{secrets.BASE_URL}}" > ./local.properties
 
       - name: Setup Gradle and Build Debug🐘
         uses: gradle/gradle-build-action@v2

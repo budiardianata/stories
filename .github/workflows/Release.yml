@@ -13,12 +13,21 @@ jobs:
     uses: budiardianata/stories/.github/workflows/Lint.yml@main
     secrets:
       MAP_API_KEY: ${{ secrets.MAP_API_KEY }}
+      BASE_URL: ${{ secrets.BASE_URL }}
+
+  tests:
+    needs: analyze
+    uses: budiardianata/stories/.github/workflows/Test.yml@main
+    secrets:
+      MAP_API_KEY: ${{ secrets.MAP_API_KEY }}
+      BASE_URL: ${{ secrets.BASE_URL }}
 
   build:
-    needs: analyze
+    needs: tests
     uses: budiardianata/stories/.github/workflows/Build.yml@main
     secrets:
       MAP_API_KEY: ${{ secrets.MAP_API_KEY }}
+      BASE_URL: ${{ secrets.BASE_URL }}
 
   release:
     needs: [analyze, build]
