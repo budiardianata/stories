@@ -85,12 +85,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
+        val header = StoryLoadStateAdapter(storyAdapter::retry)
         binding.apply {
             topAppBar.title = requireContext().getStyledAppName()
             homeList.run {
                 setLayoutManager()
-                adapter = storyAdapter.withLoadStateFooter(
-                    StoryLoadStateAdapter(storyAdapter::retry),
+                adapter = storyAdapter.withLoadStateHeaderAndFooter(
+                    header = header,
+                    footer = StoryLoadStateAdapter(storyAdapter::retry),
                 )
                 setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
                     if (scrollY > oldScrollY) binding.fab.shrink()
@@ -104,16 +106,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 setOnClickListener(::navigateToCreateStory)
             }
         }
-//        viewLifecycleOwner.lifecycleScope.launch{
-//            activityViewModel.isLogin.flowWithLifecycle(lifecycle, Lifecycle.State.CREATED).collect { isLogin ->
-//                if (!isLogin) {
-//                    findNavController().navigate(R.id.action_global_loginFragment)
-//                }
-//            }
-//        }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 launch {
                     viewmodel.stories.collect {
                         binding.swipeRefreshLayout.isRefreshing = false
@@ -122,22 +117,25 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
                 launch {
                     storyAdapter.loadStateFlow.collect { loadState ->
-                        // Only show the list if refresh succeeds.
-//                        val isListEmpty = loadState.refresh is LoadState.NotLoading && storyAdapter.itemCount == 0
-                        val isListEmpty = (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && storyAdapter.itemCount == 0) || loadState.source.refresh is LoadState.Error
+                        // append header if there is an error on mediator and there is have cached data
+                        header.loadState = loadState.mediator
+                            ?.refresh
+                            ?.takeIf { it is LoadState.Error && storyAdapter.itemCount > 0 }
+                            ?: loadState.prepend
+
                         binding.run {
-                            // show empty list
-                            errorMsg.isVisible = isListEmpty
-                            homeList.isVisible = !isListEmpty
-                            progressBar.isVisible = loadState.source.refresh is LoadState.Loading
-                            retryButton.isVisible = loadState.source.refresh is LoadState.Error && storyAdapter.itemCount == 0
-                            errorMsg.isVisible = retryButton.isVisible
-                            if (isListEmpty) {
-                                val errorState = loadState.source.append as? LoadState.Error
-                                    ?: loadState.source.prepend as? LoadState.Error
-                                    ?: loadState.append as? LoadState.Error
-                                    ?: loadState.prepend as? LoadState.Error
-                                errorState?.let { errorMsg.text = it.error.localizedMessage ?: it.error.message }
+                            progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
+                            // show only if there is an error on mediator and there is no data from cache
+                            if (loadState.mediator?.refresh is LoadState.Error && storyAdapter.itemCount == 0) {
+                                homeList.isVisible = false
+                                errorMsg.isVisible = true
+                                retryButton.isVisible = true
+                                errorMsg.text = (loadState.mediator?.refresh as LoadState.Error).error.message
+                                    ?: requireContext().getString(R.string.empty_error)
+                            } else {
+                                homeList.isVisible = loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
+                                errorMsg.isVisible = false
+                                retryButton.isVisible = false
                             }
                         }
                     }

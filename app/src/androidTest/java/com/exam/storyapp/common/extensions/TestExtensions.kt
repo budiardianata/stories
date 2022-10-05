@@ -13,8 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.matcher.BoundedMatcher
 import com.exam.storyapp.HiltTestActivity
 import com.exam.storyapp.R
 import com.exam.storyapp.common.utils.JsonFileReader
@@ -23,7 +25,6 @@ import okhttp3.mockwebserver.MockResponse
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
-
 
 inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
@@ -82,6 +83,32 @@ fun hasTextInputLayoutErrorText(expectedErrorText: String): Matcher<View> =
             return expectedErrorText == error
         }
     }
+
+fun atPosition(position: Int, itemMatcher: Matcher<View>): Matcher<View> {
+    return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
+        override fun describeTo(description: Description) {
+            description.appendText("has item at position $position: ")
+            itemMatcher.describeTo(description)
+        }
+
+        override fun matchesSafely(view: RecyclerView): Boolean {
+            val viewHolder = view.findViewHolderForAdapterPosition(position) ?: return false
+            return itemMatcher.matches(viewHolder.itemView)
+        }
+    }
+}
+
+fun notNullRecyclerItem(): Matcher<View> {
+    return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
+        override fun describeTo(description: Description?) {
+            description?.appendText("RecyclerView item is not null")
+        }
+
+        override fun matchesSafely(item: RecyclerView?): Boolean {
+            return item?.adapter?.itemCount != 0
+        }
+    }
+}
 
 fun MockResponse.withResponse(fileName: String, responseCode: Int = 200): MockResponse {
     return this.setResponseCode(responseCode)

@@ -3,49 +3,49 @@
   "message": "Stories fetched successfully",
   "listStory": [
     {
-      "id": "story-O8110bFn3StKHPxF",
-      "name": "tgh",
-      "description": "location",
-      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1664441542177_nrBchnyi.jpg",
-      "createdAt": "2022-09-29T08:52:22.179Z",
-      "lat": -6.2784307,
-      "lon": 106.8292903
+      "id": "story-h88og1LDkqfb7bb2",
+      "name": "Dicoding",
+      "description": "Tak ada yang tak mungkin jika berusaha",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1648721132156_MX2C9FYA.jpg",
+      "createdAt": "2022-03-31T10:05:32.157Z",
+      "lat": -6.4517064,
+      "lon": 107.9145669
     },
     {
-      "id": "story-HPubvmuMk5EHyq2k",
-      "name": "fyn",
-      "description": "Hello",
-      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1664433894717_bfJZX3D5.jpg",
-      "createdAt": "2022-09-29T06:44:54.719Z",
-      "lat": 37.421997,
-      "lon": -122.084
+      "id": "story-RRXghhvQZla2wUTU",
+      "name": "Dicoding",
+      "description": "Pendidikan formal dan ijazah saja tidak cukup untuk self growth",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1648720873748_H78HnWtO.jpg",
+      "createdAt": "2022-03-31T10:01:13.750Z",
+      "lat": -7.9786395,
+      "lon": 112.5617421
     },
     {
-      "id": "story-HDh4Vka7_TZJAKQ-",
-      "name": "modul1",
-      "description": "kmkkkk",
-      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1664417471667_0h4vUekD.jpg",
-      "createdAt": "2022-09-29T02:11:11.669Z",
-      "lat": -7.46343,
-      "lon": 112.4317533
+      "id": "story-ZBk-FmRMTBV71Hhf",
+      "name": "Dicoding",
+      "description": "Jadi Developer Harus Berani Keluar Zona Nyaman",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1648720795526_877kLrZI.jpg",
+      "createdAt": "2022-03-31T09:59:55.530Z",
+      "lat": -7.9786395,
+      "lon": 112.5617421
     },
     {
-      "id": "story-aDkOoSfsXrL-AhA2",
-      "name": "fyn",
-      "description": "ss",
-      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1664415775695_efuFe-ON.jpg",
-      "createdAt": "2022-09-29T01:42:55.697Z",
-      "lat": 2,
-      "lon": 2
+      "id": "story-Yk89TWuHxSYsE-1u",
+      "name": "Dicoding",
+      "description": "Because for me, in this tough times, Bangkit represents hope. Only in Bangkit..a person like me..can study with the best curriculum and best experts. Thanks to Bangkit, now I aspire to be a machine learning specialist!",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1648720737599_XbEPxqHS.jpg",
+      "createdAt": "2022-03-31T09:58:57.600Z",
+      "lat": -7.4730525,
+      "lon": 110.1825048
     },
     {
-      "id": "story-33c5PffzroMY4h5k",
-      "name": "berkah",
-      "description": "hmmm",
-      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1664386769067_KJqT-v1i.jpg",
-      "createdAt": "2022-09-28T17:39:29.068Z",
-      "lat": -7.7597684,
-      "lon": 110.4154974
+      "id": "story-FPkiCfHWfRpjwiY0",
+      "name": "Dicoding",
+      "description": "Jika sudah cinta programming, maka belajar ngoding pun terasa lebih mudah dan enjoy",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1648719567500_ssbAAkGs.png",
+      "createdAt": "2022-03-31T09:39:27.502Z",
+      "lat": -6.0019502,
+      "lon": 106.0662807
     }
   ]
 }
