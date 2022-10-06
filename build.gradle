@@ -18,11 +18,6 @@ versionCatalogUpdate {
     pin {
         versions = ["desugar-jdk"]
     }
-    keep {
-//        keepUnusedVersions = true
-//        keepUnusedLibraries = true
-//        keepUnusedPlugins = true
-    }
 }
 
 def isNonStable = { version ->

@@ -11,10 +11,10 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/marker_image"
-        android:clipToPadding="false"
         android:layout_width="@dimen/dim_32"
         android:layout_height="@dimen/dim_32"
         android:adjustViewBounds="true"
+        android:clipToPadding="false"
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
         app:strokeColor="?attr/colorError"

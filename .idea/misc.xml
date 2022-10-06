@@ -9,6 +9,13 @@
       <entry_point TYPE="method" FQNAME="com.exam.storyapp.common.extensions.ActivityExtensionsKt T parcelable(android.content.Intent $this$parcelable, java.lang.String key)" />
       <entry_point TYPE="method" FQNAME="com.exam.storyapp.common.extensions.ActivityExtensionsKt void showSnackbarText(android.app.Activity $this$showSnackbar, java.lang.String message, int length, kotlin.jvm.functions.Function1&lt;? super com.google.android.material.snackbar.Snackbar,kotlin.Unit&gt; f)" />
     </entry_points>
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="dagger.Module" />
+      <item index="1" class="java.lang.String" itemvalue="dagger.Module" />
+      <item index="2" class="java.lang.String" itemvalue="dagger.Provides" />
+      <item index="3" class="java.lang.String" itemvalue="dagger.Provides" />
+      <item index="4" class="java.lang.String" itemvalue="dagger.Provides" />
+    </list>
     <pattern value="com.exam.storyapp.ui.camera.CameraFragment" method="takePicture" />
     <pattern value="com.exam.storyapp.ui.camera.CameraFragment" method="startCamera" />
   </component>
