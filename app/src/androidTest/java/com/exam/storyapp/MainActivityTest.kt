@@ -11,7 +11,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.IdlingRegistry
@@ -104,18 +103,13 @@ class MainActivityTest {
 
         onView(withId(R.id.login_button)).check(matches(isEnabled())).perform(click())
 
-        delay(500)
+        delay(1000)
         assert(navController?.currentDestination?.id == R.id.homeFragment)
         onView(withId(R.id.home_list))
             .check(matches(isDisplayed()))
             .check(matches(notNullRecyclerItem()))
         onView(withId(R.id.fab))
             .check(matches(isDisplayed()))
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        Espresso.openActionBarOverflowOrOptionsMenu(context)
-        onView(withText(context.getString(R.string.logout))).perform(click())
-        delay(500)
-        assert(navController?.currentDestination?.id == R.id.loginFragment)
         scenario.close()
     }
 

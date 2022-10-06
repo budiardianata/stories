@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        api-level: [ 23, 28, 33 ]
+        api-level: [ 23, 28 ]
     env:
       JAVA_TOOL_OPTIONS: -Xmx4g -XX:+UseParallelGC
 
@@ -83,7 +83,6 @@ jobs:
           script: ./gradlew connectedDebugAndroidTest --stacktrace
 
       - name: Upload analyze report 📤
-        if: ${{ success() }}
         uses: actions/upload-artifact@v3
         with:
           name: test-report-API-${{ matrix.api-level }}
