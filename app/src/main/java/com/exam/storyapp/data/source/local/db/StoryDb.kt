@@ -11,7 +11,7 @@ import com.exam.storyapp.data.model.StoryData
 @Database(
     entities = [StoryData::class, RemoteKeys::class],
     version = 1,
-    exportSchema = true,
+    exportSchema = true
 )
 abstract class StoryDb : RoomDatabase() {
     abstract fun storyDao(): StoryDao

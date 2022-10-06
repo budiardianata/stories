@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor(
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
-            true,
+            true
         )
 
     fun logOut() = viewModelScope.launch { userRepository.signOut() }

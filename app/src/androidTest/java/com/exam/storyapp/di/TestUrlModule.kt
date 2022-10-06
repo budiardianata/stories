@@ -12,7 +12,7 @@ import dagger.hilt.testing.TestInstallIn
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [UrlModule::class],
+    replaces = [UrlModule::class]
 )
 object TestUrlModule {
     @Provides

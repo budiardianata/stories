@@ -58,10 +58,10 @@ class RegisterFragmentTest {
                         context.resources.getQuantityString(
                             R.plurals.password_min_length,
                             Constant.PASSWORD_MIN,
-                            Constant.PASSWORD_MIN,
-                        ),
-                    ),
-                ),
+                            Constant.PASSWORD_MIN
+                        )
+                    )
+                )
             )
 
         onView(withId(R.id.register_button)).check(matches(not(isEnabled())))
@@ -73,17 +73,17 @@ class RegisterFragmentTest {
 
         onView(withId(R.id.ed_register_name)).perform(
             typeText(FakerProvider.FAKE_NAME),
-            closeSoftKeyboard(),
+            closeSoftKeyboard()
         )
 
         onView(withId(R.id.ed_register_email)).perform(
             typeText(FakerProvider.FAKE_EMAIL),
-            closeSoftKeyboard(),
+            closeSoftKeyboard()
         )
 
         onView(withId(R.id.ed_register_password)).perform(
             typeText(FakerProvider.FAKE_PASSWORD),
-            closeSoftKeyboard(),
+            closeSoftKeyboard()
         )
 
         onView(withId(R.id.register_button)).check(matches(isEnabled()))

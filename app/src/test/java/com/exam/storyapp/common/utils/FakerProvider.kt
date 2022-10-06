@@ -23,13 +23,13 @@ object FakerProvider {
     val inputPart = mapOf(
         "description" to FAKE_DESCRIPTION.toRequestBody("text/plain".toMediaType()),
         "lat" to FAKE_LOCATION.latitude.toString().toRequestBody("text/plain".toMediaType()),
-        "lon" to FAKE_LOCATION.longitude.toString().toRequestBody("text/plain".toMediaType()),
+        "lon" to FAKE_LOCATION.longitude.toString().toRequestBody("text/plain".toMediaType())
     )
 
     val multipartBody = MultipartBody.Part.createFormData(
         "photo",
         FAKE_IMAGE.name,
-        FAKE_IMAGE.asRequestBody("image/webp".toMediaType()),
+        FAKE_IMAGE.asRequestBody("image/webp".toMediaType())
     )
 
     fun getUser() = getUserData().mapToDomain()
@@ -37,7 +37,7 @@ object FakerProvider {
     fun getUserData() = UserData(
         userId = "user-or7gXNO-HTAEnZE-",
         name = FAKE_NAME,
-        token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+        token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
     )
 
     fun generateStoryData(total: Int = 10): List<StoryData> = (1.rangeTo(total)).map { i ->
@@ -48,7 +48,7 @@ object FakerProvider {
             createdAt = "2021-08-01T00:00:00.000Z",
             photoUrl = "https://story-api.dicoding.dev/images/stories/photos-1648719567500_ssbAAkGs.png",
             lat = -6.0019502,
-            lon = 106.0662807,
+            lon = 106.0662807
         )
     }
 }

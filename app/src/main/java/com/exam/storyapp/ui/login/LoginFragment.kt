@@ -62,7 +62,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                                 is UiState.Error -> {
                                     binding.formEnable(true)
                                     requireActivity().showSnackbar(
-                                        state.exception.toString(requireContext()),
+                                        state.exception.toString(requireContext())
                                     )
                                 }
                                 is UiState.Success -> {
@@ -70,7 +70,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                                     Toast.makeText(
                                         requireContext(),
                                         state.data,
-                                        Toast.LENGTH_SHORT,
+                                        Toast.LENGTH_SHORT
                                     ).show()
                                 }
                             }

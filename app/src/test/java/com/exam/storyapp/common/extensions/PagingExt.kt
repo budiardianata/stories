@@ -24,7 +24,7 @@ suspend fun <Input : Any> PagingData<Input>.collectData(differ: DiffUtil.ItemCal
         diffCallback = differ,
         updateCallback = listUpdateCallback,
         mainDispatcher = StandardTestDispatcher(),
-        workerDispatcher = UnconfinedTestDispatcher(),
+        workerDispatcher = UnconfinedTestDispatcher()
     )
 
     // execute flow data into AsyncPagingDataDiffer

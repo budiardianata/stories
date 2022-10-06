@@ -150,7 +150,7 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
         Toast.makeText(
             requireContext(),
             requireContext().getString(R.string.error_location),
-            Toast.LENGTH_SHORT,
+            Toast.LENGTH_SHORT
         ).show()
         binding.switchShareLocation.isChecked = false
     }
@@ -170,7 +170,7 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
             is UiState.Error -> {
                 binding.formEnable(true)
                 requireActivity().showSnackbar(
-                    state.exception.toString(requireContext()),
+                    state.exception.toString(requireContext())
                 )
             }
             is UiState.Success -> {
@@ -218,7 +218,7 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
             with(requireActivity()) {
                 showSnackbar(
                     getString(R.string.permission_denied, permission.split(".").last()),
-                    Snackbar.LENGTH_INDEFINITE,
+                    Snackbar.LENGTH_INDEFINITE
                 ) {
                     action(R.string.permission_grant) {
                         Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -236,8 +236,8 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
             setMessage(
                 getString(
                     R.string.permission_rationale_message,
-                    permission.split(".").last(),
-                ),
+                    permission.split(".").last()
+                )
             )
             setPositiveButton(android.R.string.ok) { dialog, _ ->
                 rationale.accept()

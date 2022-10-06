@@ -63,7 +63,7 @@ class StoryRepositoryImplTest {
         val actualResult = storyRepositoryImpl.createStory(
             FakerProvider.FAKE_DESCRIPTION,
             FakerProvider.FAKE_IMAGE,
-            FakerProvider.FAKE_LOCATION,
+            FakerProvider.FAKE_LOCATION
         )
 
         assertTrue(actualResult is Resource.Error)
@@ -87,12 +87,12 @@ class StoryRepositoryImplTest {
         val actualResult = storyRepositoryImpl.createStory(
             FakerProvider.FAKE_DESCRIPTION,
             FakerProvider.FAKE_IMAGE,
-            FakerProvider.FAKE_LOCATION,
+            FakerProvider.FAKE_LOCATION
         )
 
         assertEquals(
             Resource.Error(StringWrapper.Resource(R.string.no_connection)),
-            actualResult,
+            actualResult
         )
         coVerifyAll {
             api.uploadStory(FakerProvider.inputPart, FakerProvider.multipartBody)
@@ -113,7 +113,7 @@ class StoryRepositoryImplTest {
         val actualResult = storyRepositoryImpl.createStory(
             FakerProvider.FAKE_DESCRIPTION,
             FakerProvider.FAKE_IMAGE,
-            FakerProvider.FAKE_LOCATION,
+            FakerProvider.FAKE_LOCATION
         )
         assertTrue(actualResult is Resource.Success)
         assertEquals(expectedResult, (actualResult as Resource.Success).data)
@@ -131,7 +131,7 @@ class StoryRepositoryImplTest {
         coEvery { api.getStories(any(), any(), any()) } returns StoriesResponse(
             true,
             "Success",
-            expectedResult,
+            expectedResult
         )
 
         val actualReceiver = storyRepositoryImpl.getStories(givenPerPage).testIn(this)
@@ -140,7 +140,7 @@ class StoryRepositoryImplTest {
         assertTrue(actualResult is Resource.Success)
         assertEquals(
             expectedResult.map { it.toDomain() },
-            (actualResult as Resource.Success).data,
+            (actualResult as Resource.Success).data
         )
         coVerifyAll {
             api.getStories(1, size = givenPerPage)

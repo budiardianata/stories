@@ -75,7 +75,7 @@ class CreateStoryViewModelTest {
             storyRepository.createStory(
                 FakerProvider.FAKE_DESCRIPTION,
                 FakerProvider.FAKE_IMAGE,
-                FakerProvider.FAKE_LOCATION,
+                FakerProvider.FAKE_LOCATION
             )
         }
         actualReceiver.cancelAndConsumeRemainingEvents()
@@ -101,7 +101,7 @@ class CreateStoryViewModelTest {
             storyRepository.createStory(
                 FakerProvider.FAKE_DESCRIPTION,
                 FakerProvider.FAKE_IMAGE,
-                FakerProvider.FAKE_LOCATION,
+                FakerProvider.FAKE_LOCATION
             )
         }
         actualReceiver.cancelAndConsumeRemainingEvents()

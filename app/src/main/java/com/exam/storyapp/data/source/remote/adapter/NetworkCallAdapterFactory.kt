@@ -10,9 +10,6 @@ import retrofit2.CallAdapter
 import retrofit2.Retrofit
 
 class NetworkCallAdapterFactory private constructor() : CallAdapter.Factory() {
-    companion object {
-        fun create(): NetworkCallAdapterFactory = NetworkCallAdapterFactory()
-    }
 
     override fun get(
         returnType: Type,
@@ -40,5 +37,9 @@ class NetworkCallAdapterFactory private constructor() : CallAdapter.Factory() {
         override fun adapt(call: Call<Type>): Call<NetworkResult<Type>> {
             return NetworkResultCall(call)
         }
+    }
+
+    companion object {
+        fun create(): NetworkCallAdapterFactory = NetworkCallAdapterFactory()
     }
 }

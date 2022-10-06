@@ -48,8 +48,8 @@ object NetworkModule {
             .baseUrl(baseUrl)
             .addConverterFactory(
                 GsonConverterFactory.create(
-                    GsonBuilder().create(),
-                ),
+                    GsonBuilder().create()
+                )
             )
             .addCallAdapterFactory(NetworkCallAdapterFactory.create())
             .client(okHttpClient)

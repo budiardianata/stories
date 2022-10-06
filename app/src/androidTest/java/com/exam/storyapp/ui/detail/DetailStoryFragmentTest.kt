@@ -28,7 +28,7 @@ class DetailStoryFragmentTest {
         val given = FakerProvider.generateStoryData(1).first().toDomain()
 
         launchFragmentInHiltContainer<DetailStoryFragment>(
-            fragmentArgs = bundleOf(Constant.KEY_STORY to given),
+            fragmentArgs = bundleOf(Constant.KEY_STORY to given)
         )
 
         onView(withId(R.id.tv_detail_name))

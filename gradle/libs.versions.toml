@@ -7,7 +7,6 @@ desugar-jdk = "1.2.2"
 expresso = "3.4.0"
 fragment = "1.5.3"
 kotlin = "1.7.20"
-ktlint = "11.0.0"
 lifecycle-viewmodel = "2.5.1"
 map-ktx = "3.4.0"
 mockk = "1.13.2"
@@ -32,7 +31,7 @@ core-ktx = "androidx.core:core-ktx:1.9.0"
 core-testing = "androidx.arch.core:core-testing:2.1.0"
 datastore = "androidx.datastore:datastore-preferences:1.0.0"
 desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar-jdk" }
-exifinterface = "androidx.exifinterface:exifinterface:1.3.3"
+exifinterface = "androidx.exifinterface:exifinterface:1.3.4"
 expresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "expresso" }
 expresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "expresso" }
 expresso-idling-resource = { module = "androidx.test.espresso:espresso-idling-resource", version.ref = "expresso" }
@@ -91,7 +90,6 @@ expresso = [
     "expresso-intents",
 ]
 lifecycle = [
-    "lifecyle-savedstate",
     "lifecyle-viewmodel",
 ]
 map-location = [
@@ -138,7 +136,6 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 maps_secret = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secret_map" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 version-check = { id = "com.github.ben-manes.versions", version.ref = "version-checker" }

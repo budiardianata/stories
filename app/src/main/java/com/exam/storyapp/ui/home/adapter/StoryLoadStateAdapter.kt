@@ -26,8 +26,8 @@ class StoryLoadStateAdapter(
         ItemLoadingBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false,
-        ),
+            false
+        )
     )
 
     inner class LoadingStateViewHolder(private val binding: ItemLoadingBinding) :

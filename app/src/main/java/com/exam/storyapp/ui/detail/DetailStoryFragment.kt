@@ -70,7 +70,7 @@ class DetailStoryFragment : Fragment(R.layout.fragment_detail_story) {
                                 startPostponedEnterTransition()
                                 return false
                             }
-                        },
+                        }
                     )
                     .into(this.ivDetailPhoto)
                 ivDetailPhoto.contentDescription = story.description

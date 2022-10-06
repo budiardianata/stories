@@ -83,7 +83,7 @@ class RegisterViewModelTest {
             userRepository.signUp(
                 FakerProvider.FAKE_NAME,
                 FakerProvider.FAKE_EMAIL,
-                FakerProvider.FAKE_PASSWORD,
+                FakerProvider.FAKE_PASSWORD
             )
         }
         actualReceiver.cancelAndConsumeRemainingEvents()
@@ -112,7 +112,7 @@ class RegisterViewModelTest {
             userRepository.signUp(
                 FakerProvider.FAKE_NAME,
                 FakerProvider.FAKE_EMAIL,
-                FakerProvider.FAKE_PASSWORD,
+                FakerProvider.FAKE_PASSWORD
             )
         }
         actualReceiver.cancelAndConsumeRemainingEvents()

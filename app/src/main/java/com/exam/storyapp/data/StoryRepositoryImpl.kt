@@ -36,15 +36,15 @@ class StoryRepositoryImpl @Inject constructor(
     @OptIn(ExperimentalPagingApi::class)
     override fun getPagedStories(): Flow<PagingData<Story>> = Pager(
         config = PagingConfig(
-            pageSize = Constant.PAGING_PER_PAGE,
+            pageSize = Constant.PAGING_PER_PAGE
         ),
         remoteMediator = StoryRemoteMediator(
             remoteSource,
-            localSource,
+            localSource
         ),
         pagingSourceFactory = {
             localSource.storyDao().getStories()
-        },
+        }
     ).flow.map { pagingData ->
         pagingData.map { it.toDomain() }
     }
@@ -67,9 +67,9 @@ class StoryRepositoryImpl @Inject constructor(
                 Resource.Error(
                     StringWrapper.Dynamic(
                         e.localizedMessage
-                            ?: "Something went wrong",
-                    ),
-                ),
+                            ?: "Something went wrong"
+                    )
+                )
             )
         }
     }.flowOn(ioDispatcher)

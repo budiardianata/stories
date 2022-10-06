@@ -51,13 +51,13 @@ class CreateStoryViewModel @Inject constructor(
                 val result = storyRepository.createStory(
                     description.value,
                     image.value!!,
-                    location.value,
+                    location.value
                 )
                 _formState.update { FormState.Submit(UiState.fromResource(result)) }
             } else {
                 _formState.update {
                     FormState.Submit(
-                        UiState.Error(StringWrapper.Resource(R.string.input_invalid)),
+                        UiState.Error(StringWrapper.Resource(R.string.input_invalid))
                     )
                 }
             }

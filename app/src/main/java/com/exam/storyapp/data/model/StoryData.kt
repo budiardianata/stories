@@ -29,7 +29,7 @@ data class StoryData(
             createdBy = name,
             createdAt = Instant.parse(createdAt).toEpochMilli(),
             lat = lat,
-            lon = lon,
+            lon = lon
         )
     }
 }

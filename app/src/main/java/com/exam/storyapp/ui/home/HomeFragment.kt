@@ -26,6 +26,7 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -92,7 +93,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 setLayoutManager()
                 adapter = storyAdapter.withLoadStateHeaderAndFooter(
                     header = header,
-                    footer = StoryLoadStateAdapter(storyAdapter::retry),
+                    footer = StoryLoadStateAdapter(storyAdapter::retry)
                 )
                 setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
                     if (scrollY > oldScrollY) binding.fab.shrink()
@@ -123,23 +124,28 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                             ?.takeIf { it is LoadState.Error && storyAdapter.itemCount > 0 }
                             ?: loadState.prepend
 
-                        binding.run {
-                            progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
-                            // show only if there is an error on mediator and there is no data from cache
-                            if (loadState.mediator?.refresh is LoadState.Error && storyAdapter.itemCount == 0) {
-                                homeList.isVisible = false
-                                errorMsg.isVisible = true
-                                retryButton.isVisible = true
-                                errorMsg.text = (loadState.mediator?.refresh as LoadState.Error).error.message
-                                    ?: requireContext().getString(R.string.empty_error)
-                            } else {
-                                homeList.isVisible = loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
-                                errorMsg.isVisible = false
-                                retryButton.isVisible = false
-                            }
-                        }
+                        handleLoadState(loadState)
                     }
                 }
+            }
+        }
+    }
+
+    private fun handleLoadState(loadState: CombinedLoadStates) {
+        binding.run {
+            progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
+            // show only if there is an error on mediator and there is no data from cache
+            if (loadState.mediator?.refresh is LoadState.Error && storyAdapter.itemCount == 0) {
+                homeList.isVisible = false
+                errorMsg.isVisible = true
+                retryButton.isVisible = true
+                errorMsg.text = (loadState.mediator?.refresh as LoadState.Error).error.message
+                    ?: requireContext().getString(R.string.empty_error)
+            } else {
+                homeList.isVisible = loadState.source.refresh is LoadState.NotLoading ||
+                    loadState.mediator?.refresh is LoadState.NotLoading
+                errorMsg.isVisible = false
+                retryButton.isVisible = false
             }
         }
     }
@@ -166,13 +172,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             resId = R.id.action_home_to_detail,
             args = bundleOf(Constant.KEY_STORY to story),
             navOptions = null,
-            navigatorExtras = extras,
+            navigatorExtras = extras
         )
     }
 
     private fun navigateToCreateStory(view: View) {
         val extras = FragmentNavigatorExtras(
-            view to getString(R.string.add_story_transition),
+            view to getString(R.string.add_story_transition)
         )
         navController.navigate(R.id.action_home_to_add, null, null, extras)
     }

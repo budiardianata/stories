@@ -39,8 +39,8 @@ class UserRepositoryImpl @Inject constructor(
                 user = UserData(
                     userId = user.id,
                     name = user.name,
-                    token = user.token,
-                ),
+                    token = user.token
+                )
             )
         }
     }

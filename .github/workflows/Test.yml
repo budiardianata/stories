@@ -14,46 +14,16 @@ on:
         required: true
 
 jobs:
-  unit-test:
-    name: Unit tests
-    runs-on: ubuntu-latest
+  test:
+    name: Run Test on Android API-${{ matrix.api-level }}
+    runs-on: macos-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        api-level: [ 23, 28, 33 ]
     env:
       JAVA_TOOL_OPTIONS: -Xmx4g -XX:+UseParallelGC
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: gradle/wrapper-validation-action@v1
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: 11
-
-      - name: Add Key from Secrets
-        run: echo -e "mapApiKey=${{secrets.MAP_API_KEY}}\nBASE_URL=${{secrets.BASE_URL}}" > ./local.properties
-
-      - name: Setup Gradle 🐘 And run unit tests 🏗
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: testDebugUnitTest
-          gradle-version: 7.5.1
-
-      - name: Upload Unit Test report 📤
-        if: ${{ success() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: unit-tests-report
-          path: ${{github.workspace}}/app/build/reports/tests
-          if-no-files-found: error
-
-  android-tests:
-    name: Instrumented tests
-    runs-on: macos-latest # enables hardware acceleration in the virtual machine
-    timeout-minutes: 55
-    strategy:
-      matrix:
-        api-level: [ 23, 29 ] # 23 is the minimum supported API level
 
     steps:
       - uses: actions/checkout@v3
@@ -69,8 +39,12 @@ jobs:
       - name: Add Key from Secrets
         run: echo -e "mapApiKey=${{secrets.MAP_API_KEY}}\nBASE_URL=${{secrets.BASE_URL}}" > ./local.properties
 
-      - name: Gradle cache
+      - name: Setup Gradle 🐘 And run unit tests 🏗
         uses: gradle/gradle-build-action@v2
+        with:
+          arguments: testDebugUnitTest --stacktrace
+          cache-read-only: false
+          gradle-version: 7.5.1
 
       - name: AVD cache
         uses: actions/cache@v3
@@ -78,7 +52,6 @@ jobs:
         with:
           path: |
             ~/.android/avd/*
-            ~/.android/avd/*/snapshots/*
             ~/.android/adb*
           key: avd-${{ matrix.api-level }}
 
@@ -87,10 +60,12 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
-          target: google_apis or playstore
+          target: ${{ matrix.api-level >= 32 && 'google_apis' || 'default' }}
           arch: x86_64
-          force-avd-creation: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          force-avd-creation: false
+          ram-size: 2048M
+          disk-size: 4096M
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: echo "Generated AVD snapshot for caching."
 
@@ -98,17 +73,19 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
-          target: google_apis
+          target: ${{ matrix.api-level >= 32 && 'google_apis' || 'default' }}
           arch: x86_64
-          disk-size: 2000M
-          heap-size: 600M
           force-avd-creation: false
+          ram-size: 2048M
+          disk-size: 4096M
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          script: gradlew connectedDebugAndroidTest --stacktrace
+          script: ./gradlew connectedDebugAndroidTest --stacktrace
 
-      - name: Upload android test report
+      - name: Upload analyze report 📤
+        if: ${{ success() }}
         uses: actions/upload-artifact@v3
         with:
-          name: android-tests-report-${{ matrix.api-level }}
-          path: ${{ env.SAMPLE_PATH }}/app/build/reports/androidTests
+          name: test-report-API-${{ matrix.api-level }}
+          path: ${{github.workspace}}/app/build/reports
+          if-no-files-found: error

@@ -71,7 +71,7 @@ class StoriesMapViewModelTest {
     fun `when map is loaded - result stories error`() = runTest {
         val expectedResult = StringWrapper.Dynamic("error")
         every { storyRepository.getStories(any(), any(), any()) } returns flowOf(
-            Resource.Error(StringWrapper.Dynamic("error")),
+            Resource.Error(StringWrapper.Dynamic("error"))
         )
 
         storiesMapViewModel.dispatchEvent(StoriesMapEvent.MapReady)
@@ -89,7 +89,7 @@ class StoriesMapViewModelTest {
         val expectedNumLoaded = 10
         val expectedStories = FakerProvider.generateStoryData(expectedNumLoaded).map { it.toDomain() }
         every { storyRepository.getStories(any(), any(), any()) } returns flowOf(
-            Resource.Success(expectedStories),
+            Resource.Success(expectedStories)
         )
 
         storiesMapViewModel.dispatchEvent(StoriesMapEvent.StoriesLoaded(expectedNumLoaded)) // default 25

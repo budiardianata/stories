@@ -56,7 +56,7 @@ class UserRepositoryImplTest {
             storyApi.login(any(), any())
         } returns NetworkResult.Error(
             401,
-            StringWrapper.Resource(R.string.unknown_error),
+            StringWrapper.Resource(R.string.unknown_error)
         )
 
         val actualResult = repository.signIn(FakerProvider.FAKE_EMAIL, FakerProvider.FAKE_PASSWORD)
@@ -94,8 +94,8 @@ class UserRepositoryImplTest {
             LoginResponse(
                 error = false,
                 message = "Success",
-                loginResult = expectedResult,
-            ),
+                loginResult = expectedResult
+            )
         )
 
         val actualResult = repository.signIn(FakerProvider.FAKE_EMAIL, FakerProvider.FAKE_PASSWORD)
@@ -118,18 +118,18 @@ class UserRepositoryImplTest {
         val actualResult = repository.signUp(
             email = FakerProvider.FAKE_EMAIL,
             password = FakerProvider.FAKE_PASSWORD,
-            name = FakerProvider.FAKE_NAME,
+            name = FakerProvider.FAKE_NAME
         )
 
         assertEquals(
             Resource.Error(expectedResult),
-            actualResult,
+            actualResult
         )
         coVerifyAll {
             storyApi.register(
                 FakerProvider.FAKE_NAME,
                 FakerProvider.FAKE_EMAIL,
-                FakerProvider.FAKE_PASSWORD,
+                FakerProvider.FAKE_PASSWORD
             )
             dataStore wasNot Called
         }
@@ -144,18 +144,18 @@ class UserRepositoryImplTest {
         val actualResult = repository.signUp(
             email = FakerProvider.FAKE_EMAIL,
             password = FakerProvider.FAKE_PASSWORD,
-            name = FakerProvider.FAKE_NAME,
+            name = FakerProvider.FAKE_NAME
         )
 
         assertEquals(
             Resource.Error(StringWrapper.Resource(R.string.no_connection)),
-            actualResult,
+            actualResult
         )
         coVerifyAll {
             storyApi.register(
                 FakerProvider.FAKE_NAME,
                 FakerProvider.FAKE_EMAIL,
-                FakerProvider.FAKE_PASSWORD,
+                FakerProvider.FAKE_PASSWORD
             )
             dataStore wasNot Called
         }
@@ -168,25 +168,25 @@ class UserRepositoryImplTest {
         } returns NetworkResult.Success(
             DefaultResponse(
                 error = false,
-                message = "Success",
-            ),
+                message = "Success"
+            )
         )
 
         val actualResult = repository.signUp(
             email = FakerProvider.FAKE_EMAIL,
             password = FakerProvider.FAKE_PASSWORD,
-            name = FakerProvider.FAKE_NAME,
+            name = FakerProvider.FAKE_NAME
         )
 
         assertEquals(
             Resource.Success("Success"),
-            actualResult,
+            actualResult
         )
         coVerifyAll {
             storyApi.register(
                 FakerProvider.FAKE_NAME,
                 FakerProvider.FAKE_EMAIL,
-                FakerProvider.FAKE_PASSWORD,
+                FakerProvider.FAKE_PASSWORD
             )
             dataStore wasNot Called
         }

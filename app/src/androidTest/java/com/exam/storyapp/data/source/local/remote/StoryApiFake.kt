@@ -48,7 +48,7 @@ class StoryApiFake(private val testMode: TestMode) : StoryApi {
                 StoriesResponse(
                     false,
                     "Success",
-                    stories.subList((page - 1) * size, (page - 1) * size + size),
+                    stories.subList((page - 1) * size, (page - 1) * size + size)
                 )
             }
             TestMode.ERROR -> throw IOException()

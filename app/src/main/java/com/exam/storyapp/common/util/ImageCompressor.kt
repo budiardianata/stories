@@ -27,7 +27,8 @@ object ImageCompressor {
         } else {
             Bitmap.CompressFormat.JPEG
         }
-        val tempFile = File(context.cacheDir, "${System.currentTimeMillis()}.${format.extension()}").apply {
+        val name = "${System.currentTimeMillis()}.${format.extension()}"
+        val tempFile = File(context.cacheDir, name).apply {
             createNewFile()
         }
         try {

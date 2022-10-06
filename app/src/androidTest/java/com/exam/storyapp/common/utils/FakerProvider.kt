@@ -14,7 +14,7 @@ object FakerProvider {
     fun getUserData() = UserData(
         userId = "user-or7gXNO-HTAEnZE-",
         name = FAKE_NAME,
-        token = "eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp9",
+        token = "eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp9"
     )
 
     fun generateStoryData(total: Int): List<StoryData> = (1.rangeTo(total)).map { i ->
@@ -25,7 +25,7 @@ object FakerProvider {
             createdAt = "2021-08-01T00:00:00.000Z",
             photoUrl = "https://story-api.dicoding.dev/images/stories/photos-1648719567500_ssbAAkGs.png",
             lat = -6.0019502,
-            lon = 106.0662807,
+            lon = 106.0662807
         )
     }
 }

@@ -47,7 +47,7 @@ class LoginFragmentTest {
         onView(withId(R.id.login_button)).check(matches(not(isEnabled())))
         onView(withId(R.id.ed_login_email)).perform(typeText(FakerProvider.FAKE_NAME), closeSoftKeyboard())
         onView(withId(R.id.lay_email)).check(
-            matches(hasTextInputLayoutErrorText(context.getString(R.string.email_invalid))),
+            matches(hasTextInputLayoutErrorText(context.getString(R.string.email_invalid)))
         )
         onView(withId(R.id.ed_login_password)).perform(typeText(FakerProvider.FAKE_NAME), closeSoftKeyboard())
         onView(withId(R.id.lay_password))
@@ -57,10 +57,10 @@ class LoginFragmentTest {
                         context.resources.getQuantityString(
                             R.plurals.password_min_length,
                             Constant.PASSWORD_MIN,
-                            Constant.PASSWORD_MIN,
-                        ),
-                    ),
-                ),
+                            Constant.PASSWORD_MIN
+                        )
+                    )
+                )
             )
         onView(withId(R.id.login_button)).check(matches(not(isEnabled())))
     }

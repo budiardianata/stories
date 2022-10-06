@@ -40,14 +40,14 @@ class StoryRemoteMediator @Inject constructor(
             LoadType.PREPEND -> {
                 val remoteKeys = getRemoteKeyForFirstItem(state)
                 val prevKey = remoteKeys?.prevKey ?: return MediatorResult.Success(
-                    endOfPaginationReached = remoteKeys != null,
+                    endOfPaginationReached = remoteKeys != null
                 )
                 prevKey
             }
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeysForLastItem(state)
                 val nextKey = remoteKeys?.nextKey ?: return MediatorResult.Success(
-                    endOfPaginationReached = remoteKeys != null,
+                    endOfPaginationReached = remoteKeys != null
                 )
                 nextKey
             }
@@ -91,7 +91,9 @@ class StoryRemoteMediator @Inject constructor(
         }
     }
 
-    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, StoryData>): RemoteKeys? {
+    private suspend fun getRemoteKeyClosestToCurrentPosition(
+        state: PagingState<Int, StoryData>,
+    ): RemoteKeys? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { id ->
                 storyDb.remoteKeysDao().getById(id)

@@ -31,7 +31,7 @@ fun Activity.getUriProvider(
     return FileProvider.getUriForFile(
         this,
         "${this.packageName}.fileprovider",
-        file,
+        file
     )
 }
 

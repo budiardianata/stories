@@ -26,6 +26,9 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 
+const val FRAGMENT_THEME =
+    "androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY"
+
 inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
     @StyleRes themeResId: Int = R.style.Theme_StoryApp,
@@ -36,11 +39,11 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     val mainActivityIntent = Intent.makeMainActivity(
         ComponentName(
             ApplicationProvider.getApplicationContext(),
-            HiltTestActivity::class.java,
-        ),
+            HiltTestActivity::class.java
+        )
     ).putExtra(
-        "androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY",
-        themeResId,
+        FRAGMENT_THEME,
+        themeResId
     )
 
     ActivityScenario.launch<HiltTestActivity>(mainActivityIntent).onActivity { activity ->
@@ -50,7 +53,7 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
         }
         val fragment: Fragment = activity.supportFragmentManager.fragmentFactory.instantiate(
             Preconditions.checkNotNull(T::class.java.classLoader),
-            T::class.java.name,
+            T::class.java.name
         )
         fragment.arguments = fragmentArgs
         fragment.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->

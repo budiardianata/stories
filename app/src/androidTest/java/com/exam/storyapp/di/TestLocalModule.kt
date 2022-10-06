@@ -24,7 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [LocalModule::class],
+    replaces = [LocalModule::class]
 )
 object TestLocalModule {
 
@@ -33,7 +33,7 @@ object TestLocalModule {
     fun provideDatabase(@ApplicationContext context: Context): StoryDb {
         return Room.inMemoryDatabaseBuilder(
             context.applicationContext,
-            StoryDb::class.java,
+            StoryDb::class.java
         ).allowMainThreadQueries().build()
     }
 
@@ -48,7 +48,7 @@ object TestLocalModule {
             serializer = UserPreferenceSerializer,
             produceFile = { appContext.dataStoreFile("TEST_PREFERENCE_$random") },
             scope = coroutineScope,
-            corruptionHandler = null,
+            corruptionHandler = null
         )
     }
 }

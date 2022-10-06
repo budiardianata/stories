@@ -56,7 +56,7 @@ class StoryDbTest {
         val expectedResult = RemoteKeys(id = "4", prevKey = 3, nextKey = 4)
         val given = listOf(
             expectedResult,
-            RemoteKeys(id = "5", prevKey = 4, nextKey = 5),
+            RemoteKeys(id = "5", prevKey = 4, nextKey = 5)
         )
 
         database.remoteKeysDao().insert(given)

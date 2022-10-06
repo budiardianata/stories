@@ -41,7 +41,7 @@ class StoryRemoteMediatorTest {
         listOf(),
         null,
         PagingConfig(10),
-        10,
+        10
     )
 
     @Before

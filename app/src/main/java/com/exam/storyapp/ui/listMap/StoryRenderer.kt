@@ -65,7 +65,7 @@ class StoryRenderer(
                     ) {
                         listener.invoke(resource)
                     }
-                },
+                }
             )
     }
 

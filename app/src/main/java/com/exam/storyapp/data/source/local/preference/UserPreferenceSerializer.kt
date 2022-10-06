@@ -17,7 +17,7 @@ object UserPreferenceSerializer : Serializer<UserPreference> {
         return try {
             Json.decodeFromString(
                 deserializer = UserPreference.serializer(),
-                string = input.readBytes().decodeToString(),
+                string = input.readBytes().decodeToString()
             )
         } catch (e: SerializationException) {
             e.printStackTrace()
@@ -29,8 +29,8 @@ object UserPreferenceSerializer : Serializer<UserPreference> {
         output.write(
             Json.encodeToString(
                 serializer = UserPreference.serializer(),
-                value = t,
-            ).encodeToByteArray(),
+                value = t
+            ).encodeToByteArray()
         )
     }
 }

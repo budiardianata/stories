@@ -106,7 +106,7 @@ class HomeFragmentTest {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
         File(
             ApplicationProvider.getApplicationContext<Context>().filesDir,
-            "datastore",
+            "datastore"
         ).deleteRecursively()
     }
 }
