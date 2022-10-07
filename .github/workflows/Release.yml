@@ -35,9 +35,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download Test Output Artefact 📦
-          uses: actions/download-artifact@v3
-          with:
-            name: test-report-API-28
+        uses: actions/download-artifact@v3
+        with:
+          name: test-report-API-28
 
       - name: Download Build Output Artefact 📦
         uses: actions/download-artifact@v3
@@ -46,11 +46,11 @@ jobs:
           name: build-output
 
       - name: Archive Release
-          uses: thedoctor0/zip-release@main
-          with:
-            type: 'zip'
-            path: 'androidTests/connected'
-            filename: 'Inst-Test.zip'
+        uses: thedoctor0/zip-release@main
+        with:
+          type: 'zip'
+          path: 'androidTests/connected'
+          filename: 'Inst-Test.zip'
 
       - name: Archive Unit Test
         uses: thedoctor0/zip-release@main
