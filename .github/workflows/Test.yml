@@ -1,9 +1,6 @@
 name: Test
 
 on:
-  pull_request:
-    branches:
-      - main
   workflow_call:
     secrets:
       MAP_API_KEY:
@@ -82,7 +79,7 @@ jobs:
           disable-animations: true
           script: ./gradlew connectedDebugAndroidTest --stacktrace
 
-      - name: Upload analyze report 📤
+      - name: Upload tests report 📤
         uses: actions/upload-artifact@v3
         with:
           name: test-report-API-${{ matrix.api-level }}
