@@ -35,14 +35,14 @@ class LoadingButton @JvmOverloads constructor(
             attrs,
             com.google.android.material.R.styleable.MaterialButton,
             defStyleAttr,
-            com.google.android.material.R.style.Widget_MaterialComponents_Button,
+            com.google.android.material.R.style.Widget_MaterialComponents_Button
         )
         try {
             progressDrawable.setColorSchemeColors(
                 attributes.getColor(
                     com.google.android.material.R.styleable.MaterialButton_iconTint,
-                    com.google.android.material.R.attr.colorPrimary,
-                ),
+                    com.google.android.material.R.attr.colorPrimary
+                )
             )
         } finally {
             attributes.recycle()

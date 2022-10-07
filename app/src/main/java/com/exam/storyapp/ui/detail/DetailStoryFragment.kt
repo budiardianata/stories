@@ -31,7 +31,6 @@ class DetailStoryFragment : Fragment(R.layout.fragment_detail_story) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = MaterialContainerTransform().apply {
-            startDelay = resources.getInteger(R.integer.anim_duration_short).toLong()
             drawingViewId = R.id.nav_host_fragment
             duration = resources.getInteger(R.integer.anim_duration_long).toLong()
             scrimColor = Color.TRANSPARENT
@@ -71,7 +70,7 @@ class DetailStoryFragment : Fragment(R.layout.fragment_detail_story) {
                                 startPostponedEnterTransition()
                                 return false
                             }
-                        },
+                        }
                     )
                     .into(this.ivDetailPhoto)
                 ivDetailPhoto.contentDescription = story.description

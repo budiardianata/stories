@@ -28,7 +28,7 @@ class NetworkResultCall<T : Any>(
                     val result = NetworkResult.Exception<T>(t)
                     callback.onResponse(this@NetworkResultCall, Response.success(result))
                 }
-            },
+            }
         )
     }
 

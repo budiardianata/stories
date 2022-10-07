@@ -27,9 +27,10 @@
         android:id="@+id/iv_logo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
         android:maxHeight="200dp"
         android:minHeight="150dp"
-        android:src="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/ic_logo" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title_register"

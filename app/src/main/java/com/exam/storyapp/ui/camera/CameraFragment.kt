@@ -103,7 +103,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                             override fun onAnimationEnd(animation: Animator) {
                                 it.rotation = 0f
                             }
-                        },
+                        }
                     )
                     start()
                 }
@@ -127,7 +127,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
             }
             updateCameraSwitchButton()
             bindCameraUseCases()
-        }, ContextCompat.getMainExecutor(requireContext()),)
+        }, ContextCompat.getMainExecutor(requireContext()))
     }
 
     private fun bindCameraUseCases() {
@@ -158,14 +158,14 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                 this,
                 cameraSelector,
                 preview,
-                imageCapture,
+                imageCapture
             )
 
             cameraProvider.bindToLifecycle(
                 this,
                 cameraSelector,
                 preview,
-                imageCapture,
+                imageCapture
             )
             preview?.setSurfaceProvider(binding.viewFinder.surfaceProvider)
             binding.capture.isEnabled = true
@@ -212,7 +212,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                     override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                         fixRotation(outputFile)
                     }
-                },
+                }
             )
         }
     }
@@ -242,7 +242,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         CoroutineScope(SupervisorJob() + ioDispatcher).launch {
             val orientation = ExifInterface(file).getAttributeInt(
                 ExifInterface.TAG_ORIENTATION,
-                ExifInterface.ORIENTATION_UNDEFINED,
+                ExifInterface.ORIENTATION_UNDEFINED
             )
             val options = BitmapFactory.Options().apply {
                 inPreferredConfig = Bitmap.Config.ARGB_8888

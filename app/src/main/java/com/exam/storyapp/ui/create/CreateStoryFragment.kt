@@ -31,6 +31,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.exam.storyapp.R
 import com.exam.storyapp.common.extensions.*
 import com.exam.storyapp.common.util.Constant
+import com.exam.storyapp.common.util.ImageCompressor
 import com.exam.storyapp.databinding.FragmentCreateStoryBinding
 import com.exam.storyapp.domain.model.FormState
 import com.exam.storyapp.domain.model.UiState
@@ -41,7 +42,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import net.samystudio.permissionlauncher.RationalePermissionLauncher
 import net.samystudio.permissionlauncher.createPermissionLauncher
@@ -56,7 +56,7 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
         createPermissionLauncher(Manifest.permission.READ_EXTERNAL_STORAGE)
     private val viewmodel by viewModels<CreateStoryViewModel>()
     private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        uri?.let { viewmodel.dispatchEvent(CreateStoryEvent.AddImage(it)) }
+        processImage(uri)
     }
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -75,7 +75,7 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
         super.onViewCreated(view, savedInstanceState)
         setFragmentResultListener(Constant.REQ_IMAGE) { _, bundle ->
             bundle.parcelable<Uri>(Constant.KEY_IMAGE)?.let {
-                viewmodel.dispatchEvent(CreateStoryEvent.AddImage(it))
+                processImage(it)
             }
         }
         val navController = findNavController()
@@ -83,7 +83,7 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         binding.run {
             toolbarDetail.setupWithNavController(navController, appBarConfiguration)
-            buttonAdd.setOnClickListener { viewmodel.dispatchEvent(CreateStoryEvent.Save) }
+            buttonAdd.setOnClickListener { viewmodel.dispatchEvent(CreateStoryEvent.CreateStory) }
             addImageChooser.setOnClickListener { showMenu(it, R.menu.menu_add_image) }
             edAddDescription.doAfterTextChanged {
                 viewmodel.dispatchEvent(CreateStoryEvent.AddDescription(it.toString()))
@@ -111,16 +111,19 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
                         }
                     }
                 }
-                launch {
-                    viewmodel.image.collectLatest {
-                        it?.let {
-                            binding.previewImage.setImageURI(it)
-                        } ?: run {
-                            binding.previewImage.setImageResource(R.drawable.ic_image_placeholder)
-                        }
-                    }
-                }
             }
+        }
+    }
+
+    private fun processImage(uri: Uri?) {
+        binding.previewImage.setImageURI(uri)
+        if (uri != null) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val imageFile = ImageCompressor.compress(requireContext(), uri)
+                viewmodel.dispatchEvent(CreateStoryEvent.AddImage(imageFile))
+            }
+        } else {
+            viewmodel.dispatchEvent(CreateStoryEvent.AddImage(null))
         }
     }
 
@@ -147,7 +150,7 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
         Toast.makeText(
             requireContext(),
             requireContext().getString(R.string.error_location),
-            Toast.LENGTH_SHORT,
+            Toast.LENGTH_SHORT
         ).show()
         binding.switchShareLocation.isChecked = false
     }
@@ -167,7 +170,7 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
             is UiState.Error -> {
                 binding.formEnable(true)
                 requireActivity().showSnackbar(
-                    state.exception.toString(requireContext()),
+                    state.exception.toString(requireContext())
                 )
             }
             is UiState.Success -> {
@@ -215,7 +218,7 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
             with(requireActivity()) {
                 showSnackbar(
                     getString(R.string.permission_denied, permission.split(".").last()),
-                    Snackbar.LENGTH_INDEFINITE,
+                    Snackbar.LENGTH_INDEFINITE
                 ) {
                     action(R.string.permission_grant) {
                         Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -233,8 +236,8 @@ class CreateStoryFragment : Fragment(R.layout.fragment_create_story) {
             setMessage(
                 getString(
                     R.string.permission_rationale_message,
-                    permission.split(".").last(),
-                ),
+                    permission.split(".").last()
+                )
             )
             setPositiveButton(android.R.string.ok) { dialog, _ ->
                 rationale.accept()

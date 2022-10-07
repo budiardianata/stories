@@ -5,9 +5,11 @@ package com.exam.storyapp.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.exam.storyapp.R
 import com.exam.storyapp.common.extensions.isEmailValid
 import com.exam.storyapp.common.extensions.isPasswordValid
 import com.exam.storyapp.common.util.Resource
+import com.exam.storyapp.common.util.StringWrapper
 import com.exam.storyapp.domain.model.FormState
 import com.exam.storyapp.domain.model.UiState
 import com.exam.storyapp.domain.repositories.UserRepository
@@ -23,7 +25,6 @@ class LoginViewModel @Inject constructor(
     private val _loginState = MutableStateFlow<FormState>(FormState.Validating(false))
     private val email = MutableStateFlow("")
     private val password = MutableStateFlow("")
-
     val loginState: StateFlow<FormState> = _loginState.asStateFlow()
 
     init {
@@ -44,15 +45,23 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun performLogin() {
+        _loginState.update { FormState.Submit(UiState.Loading()) }
         viewModelScope.launch {
-            _loginState.update { FormState.Submit(UiState.Loading()) }
-            when (val result = userRepository.signIn(email.value, password.value)) {
-                is Resource.Error -> {
-                    _loginState.update { FormState.Submit(UiState.Error(result.exception)) }
+            if (email.value.isEmailValid() && password.value.isPasswordValid()) {
+                when (val result = userRepository.signIn(email.value, password.value)) {
+                    is Resource.Error -> {
+                        _loginState.update { FormState.Submit(UiState.Error(result.exception)) }
+                    }
+                    is Resource.Success -> {
+                        _loginState.update {
+                            FormState.Submit(UiState.Success("Login Success"))
+                        }
+                        userRepository.saveUserSession(result.data)
+                    }
                 }
-                is Resource.Success -> {
-                    _loginState.update { FormState.Submit(UiState.Success("")) }
-                    userRepository.saveUserSession(result.data)
+            } else {
+                _loginState.update {
+                    FormState.Submit(UiState.Error(StringWrapper.Resource(R.string.input_invalid)))
                 }
             }
         }

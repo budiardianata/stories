@@ -26,8 +26,8 @@ class StoryLoadStateAdapter(
         ItemLoadingBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false,
-        ),
+            false
+        )
     )
 
     inner class LoadingStateViewHolder(private val binding: ItemLoadingBinding) :
@@ -35,13 +35,13 @@ class StoryLoadStateAdapter(
         fun bind(loadState: LoadState, retryCallback: () -> Unit) {
             with(binding) {
                 if (loadState is LoadState.Error) {
-                    errorMsg.text = loadState.error.localizedMessage ?: loadState.error.message
+                    errorMsgItem.text = loadState.error.localizedMessage ?: loadState.error.message
                 }
-                retryButton.isVisible = loadState is LoadState.Error
-                errorMsg.isVisible = loadState is LoadState.Error
+                retryButtonItem.isVisible = loadState is LoadState.Error
+                errorMsgItem.isVisible = loadState is LoadState.Error
                 progressBar.isVisible = loadState is LoadState.Loading
 
-                retryButton.setOnClickListener { retryCallback() }
+                retryButtonItem.setOnClickListener { retryCallback() }
             }
         }
     }

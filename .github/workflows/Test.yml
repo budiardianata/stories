@@ -1,0 +1,87 @@
+name: Test
+
+on:
+  workflow_call:
+    secrets:
+      MAP_API_KEY:
+        description: 'A map key from the caller workflow'
+        required: true
+      BASE_URL:
+        description: 'A base url api endpoint'
+        required: true
+
+jobs:
+  test:
+    name: Run Test on Android API-${{ matrix.api-level }}
+    runs-on: macos-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        api-level: [ 23, 28 ]
+    env:
+      JAVA_TOOL_OPTIONS: -Xmx4g -XX:+UseParallelGC
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: gradle/wrapper-validation-action@v1
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 11
+
+      - name: Add Key from Secrets
+        run: echo -e "mapApiKey=${{secrets.MAP_API_KEY}}\nBASE_URL=${{secrets.BASE_URL}}" > ./local.properties
+
+      - name: Setup Gradle 🐘 And run unit tests 🏗
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: testDebugUnitTest --stacktrace
+          cache-read-only: false
+          gradle-version: 7.5.1
+
+      - name: AVD cache
+        uses: actions/cache@v3
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: Generate AVD snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.api-level >= 32 && 'google_apis' || 'default' }}
+          arch: x86_64
+          force-avd-creation: false
+          ram-size: 2048M
+          disk-size: 4096M
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: Run Android instrumented tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.api-level >= 32 && 'google_apis' || 'default' }}
+          arch: x86_64
+          force-avd-creation: false
+          ram-size: 2048M
+          disk-size: 4096M
+#          emulator-options: -no-snapshot-save -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: ./gradlew connectedDebugAndroidTest --stacktrace
+
+      - name: Upload tests report 📤
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report-API-${{ matrix.api-level }}
+          path: ${{github.workspace}}/app/build/reports
+          if-no-files-found: error

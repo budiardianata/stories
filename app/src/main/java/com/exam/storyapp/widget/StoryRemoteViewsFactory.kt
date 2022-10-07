@@ -57,7 +57,7 @@ class StoryRemoteViewsFactory(
                     RequestOptions()
                         .override(100, 100)
                         .centerCrop()
-                        .error(R.drawable.ic_image_placeholder),
+                        .error(R.drawable.ic_image_placeholder)
                 )
                 .asBitmap()
                 .load(story.image)

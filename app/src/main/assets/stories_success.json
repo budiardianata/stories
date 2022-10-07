@@ -1,0 +1,51 @@
+{
+  "error": false,
+  "message": "Stories fetched successfully",
+  "listStory": [
+    {
+      "id": "story-h88og1LDkqfb7bb2",
+      "name": "Dicoding",
+      "description": "Tak ada yang tak mungkin jika berusaha",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1648721132156_MX2C9FYA.jpg",
+      "createdAt": "2022-03-31T10:05:32.157Z",
+      "lat": -6.4517064,
+      "lon": 107.9145669
+    },
+    {
+      "id": "story-RRXghhvQZla2wUTU",
+      "name": "Dicoding",
+      "description": "Pendidikan formal dan ijazah saja tidak cukup untuk self growth",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1648720873748_H78HnWtO.jpg",
+      "createdAt": "2022-03-31T10:01:13.750Z",
+      "lat": -7.9786395,
+      "lon": 112.5617421
+    },
+    {
+      "id": "story-ZBk-FmRMTBV71Hhf",
+      "name": "Dicoding",
+      "description": "Jadi Developer Harus Berani Keluar Zona Nyaman",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1648720795526_877kLrZI.jpg",
+      "createdAt": "2022-03-31T09:59:55.530Z",
+      "lat": -7.9786395,
+      "lon": 112.5617421
+    },
+    {
+      "id": "story-Yk89TWuHxSYsE-1u",
+      "name": "Dicoding",
+      "description": "Because for me, in this tough times, Bangkit represents hope. Only in Bangkit..a person like me..can study with the best curriculum and best experts. Thanks to Bangkit, now I aspire to be a machine learning specialist!",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1648720737599_XbEPxqHS.jpg",
+      "createdAt": "2022-03-31T09:58:57.600Z",
+      "lat": -7.4730525,
+      "lon": 110.1825048
+    },
+    {
+      "id": "story-FPkiCfHWfRpjwiY0",
+      "name": "Dicoding",
+      "description": "Jika sudah cinta programming, maka belajar ngoding pun terasa lebih mudah dan enjoy",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1648719567500_ssbAAkGs.png",
+      "createdAt": "2022-03-31T09:39:27.502Z",
+      "lat": -6.0019502,
+      "lon": 106.0662807
+    }
+  ]
+}

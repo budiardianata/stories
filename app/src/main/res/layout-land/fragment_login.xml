@@ -10,12 +10,13 @@
         android:id="@+id/iv_logo"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
         android:padding="@dimen/dim_16"
-        android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_logo" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

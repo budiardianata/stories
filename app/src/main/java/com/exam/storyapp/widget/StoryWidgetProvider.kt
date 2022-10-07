@@ -53,11 +53,11 @@ class StoryWidgetProvider : AppWidgetProvider() {
                 setEmptyView(R.id.list_grid_stories, R.id.empty_grid)
                 setPendingIntentTemplate(
                     R.id.list_grid_stories,
-                    getSelfIntent(context, appWidgetId, WIDGET_ITEM_CLICK_ACTION),
+                    getSelfIntent(context, appWidgetId, WIDGET_ITEM_CLICK_ACTION)
                 )
                 setOnClickPendingIntent(
                     R.id.refresh_story_button,
-                    getSelfIntent(context, appWidgetId, WIDGET_REFRESH_ACTION),
+                    getSelfIntent(context, appWidgetId, WIDGET_REFRESH_ACTION)
                 )
                 setOnClickPendingIntent(R.id.create_story_button, intentCreate)
             }
@@ -76,8 +76,8 @@ class StoryWidgetProvider : AppWidgetProvider() {
                     .setDestination(R.id.detailFragment)
                     .setArguments(
                         bundleOf(
-                            Constant.KEY_STORY to story,
-                        ),
+                            Constant.KEY_STORY to story
+                        )
                     )
                     .createPendingIntent()
                 detailStoryIntent.send()

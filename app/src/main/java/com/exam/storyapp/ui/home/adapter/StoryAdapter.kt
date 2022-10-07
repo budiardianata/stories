@@ -26,8 +26,8 @@ class StoryAdapter(
         ItemStoryBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false,
-        ),
+            false
+        )
     )
 
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
@@ -50,32 +50,32 @@ class StoryAdapter(
                     .placeholder(
                         context.getProgressDrawable().apply {
                             start()
-                        },
+                        }
                     )
                     .into(ivItemPhoto)
                 ViewCompat.setTransitionName(
                     ivItemPhoto,
-                    context.getString(R.string.story_image_item_transition_name, story.id),
+                    context.getString(R.string.story_image_item_transition_name, story.id)
                 )
                 ViewCompat.setTransitionName(
                     tvItemName,
-                    context.getString(R.string.story_name_item_transition_name, story.id),
+                    context.getString(R.string.story_name_item_transition_name, story.id)
                 )
                 ViewCompat.setTransitionName(
                     storyCreatedAt,
-                    context.getString(R.string.story_date_item_transition_name, story.id),
+                    context.getString(R.string.story_date_item_transition_name, story.id)
                 )
                 ViewCompat.setTransitionName(
                     storyDescription,
-                    context.getString(R.string.story_desc_item_transition_name, story.id),
+                    context.getString(R.string.story_desc_item_transition_name, story.id)
                 )
                 ViewCompat.setTransitionName(
                     storyCard,
-                    context.getString(R.string.story_card_item_transition_name, story.id),
+                    context.getString(R.string.story_card_item_transition_name, story.id)
                 )
                 val extras = FragmentNavigatorExtras(
                     storyCard to context.getString(R.string.story_card_detail_transition_name),
-                    ivItemPhoto to context.getString(R.string.story_image_detail_transition_name),
+                    ivItemPhoto to context.getString(R.string.story_image_detail_transition_name)
                 )
                 storyCard.setOnClickListener {
                     itemClick(extras, story)
@@ -85,7 +85,7 @@ class StoryAdapter(
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Story>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Story>() {
             override fun areItemsTheSame(oldItem: Story, newItem: Story): Boolean {
                 return oldItem == newItem
             }

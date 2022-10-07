@@ -13,23 +13,51 @@ jobs:
     uses: budiardianata/stories/.github/workflows/Lint.yml@main
     secrets:
       MAP_API_KEY: ${{ secrets.MAP_API_KEY }}
+      BASE_URL: ${{ secrets.BASE_URL }}
+
+  tests:
+    needs: analyze
+    uses: budiardianata/stories/.github/workflows/Test.yml@main
+    secrets:
+      MAP_API_KEY: ${{ secrets.MAP_API_KEY }}
+      BASE_URL: ${{ secrets.BASE_URL }}
 
   build:
-    needs: analyze
+    needs: tests
     uses: budiardianata/stories/.github/workflows/Build.yml@main
     secrets:
       MAP_API_KEY: ${{ secrets.MAP_API_KEY }}
+      BASE_URL: ${{ secrets.BASE_URL }}
 
   release:
-    needs: [analyze, build]
+    needs: [ analyze, tests, build ]
     name: Release 🚀
     runs-on: ubuntu-latest
     steps:
+      - name: Download Test Output Artefact 📦
+        uses: actions/download-artifact@v3
+        with:
+          name: test-report-API-28
+
       - name: Download Build Output Artefact 📦
         uses: actions/download-artifact@v3
         id: build-result
         with:
           name: build-output
+
+      - name: Archive Release
+        uses: thedoctor0/zip-release@main
+        with:
+          type: 'zip'
+          path: 'androidTests/connected'
+          filename: 'Inst-Test.zip'
+
+      - name: Archive Unit Test
+        uses: thedoctor0/zip-release@main
+        with:
+          type: 'zip'
+          path: 'tests/testDebugUnitTest'
+          filename: 'Unit-Test.zip'
 
       - name: Bump version and push tag 📦
         if: ${{ success() }}
@@ -45,5 +73,5 @@ jobs:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
-          artifacts: ${{steps.build-result.outputs.download-path}}/**/*.apk
+          artifacts: Unit-Test.zip, Inst-Test.zip, ${{steps.build-result.outputs.download-path}}/**/*.apk
           token: ${{ secrets.GITHUB_TOKEN }}

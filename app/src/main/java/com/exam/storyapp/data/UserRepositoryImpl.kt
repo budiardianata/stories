@@ -8,6 +8,7 @@ import com.exam.storyapp.R
 import com.exam.storyapp.common.annotations.IODispatcher
 import com.exam.storyapp.common.util.Resource
 import com.exam.storyapp.common.util.StringWrapper
+import com.exam.storyapp.common.util.wrapEspressoIdlingResource
 import com.exam.storyapp.data.model.UserData
 import com.exam.storyapp.data.source.local.preference.UserPreference
 import com.exam.storyapp.data.source.remote.StoryApi
@@ -38,24 +39,26 @@ class UserRepositoryImpl @Inject constructor(
                 user = UserData(
                     userId = user.id,
                     name = user.name,
-                    token = user.token,
-                ),
+                    token = user.token
+                )
             )
         }
     }
 
     override suspend fun signIn(email: String, password: String): Resource<User> =
         withContext(ioDispatcher) {
-            return@withContext when (
-                val response =
-                    remoteSource.login(email = email, password = password)
-            ) {
-                is NetworkResult.Error -> Resource.Error(response.message!!)
-                is NetworkResult.Exception -> {
-                    Resource.Error(response.e.toWrapper())
-                }
-                is NetworkResult.Success -> {
-                    Resource.Success(response.data.loginResult.mapToDomain())
+            wrapEspressoIdlingResource {
+                return@withContext when (
+                    val response =
+                        remoteSource.login(email = email, password = password)
+                ) {
+                    is NetworkResult.Error -> Resource.Error(response.message!!)
+                    is NetworkResult.Exception -> {
+                        Resource.Error(response.e.toWrapper())
+                    }
+                    is NetworkResult.Success -> {
+                        Resource.Success(response.data.loginResult.mapToDomain())
+                    }
                 }
             }
         }

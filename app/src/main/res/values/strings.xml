@@ -18,6 +18,7 @@
         <item formatted="true" quantity="one">Password must be at least than %1$d character</item>
         <item formatted="true" quantity="other">Password must be at least than %1$d characters</item>
     </plurals>
+    <string name="input_invalid">Please fill all the field.</string>
     <string name="email_invalid">Email address is not valid.</string>
     <string name="login">Sign In</string>
     <string name="logout">Sign Out</string>

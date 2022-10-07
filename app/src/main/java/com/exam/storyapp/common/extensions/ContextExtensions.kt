@@ -19,7 +19,7 @@ fun Context.themeColor(
     @AttrRes themeAttrId: Int,
 ): Int {
     return obtainStyledAttributes(
-        intArrayOf(themeAttrId),
+        intArrayOf(themeAttrId)
     ).use {
         it.getColor(0, Color.MAGENTA)
     }
@@ -31,7 +31,7 @@ fun Context.getStyledAppName(): Spanned {
     val hexColor = String.format("#%06X", (0xFFFFFF and colorPrimary))
     return HtmlCompat.fromHtml(
         "Stories<span  style='color:$hexColor';>App</span>",
-        HtmlCompat.FROM_HTML_MODE_COMPACT,
+        HtmlCompat.FROM_HTML_MODE_COMPACT
     )
 }
 

@@ -9,7 +9,6 @@ plugins {
     alias libs.plugins.dager.hilt apply false
     alias libs.plugins.maps.secret apply false
     alias libs.plugins.spotless apply false
-    alias libs.plugins.ktlint apply false
     alias libs.plugins.version.check
     alias libs.plugins.version.update
 }
@@ -18,12 +17,6 @@ versionCatalogUpdate {
     sortByKey = true
     pin {
         versions = ["desugar-jdk"]
-    }
-    keep {
-        keepUnusedVersions = true
-        keepUnusedLibraries = true
-        keepUnusedPlugins = true
-
     }
 }
 

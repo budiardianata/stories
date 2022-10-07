@@ -68,11 +68,11 @@ class StoriesMapsFragment : Fragment(R.layout.fragment_stories_maps) {
     private var clusterManager: ClusterManager<Story>? = null
     private val permissions = listOf(
         Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_FINE_LOCATION
     )
 
     private val locationPermissionLauncher = createMultiplePermissionsLauncher(
-        anyOf(*permissions.toTypedArray()),
+        anyOf(*permissions.toTypedArray())
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -95,7 +95,7 @@ class StoriesMapsFragment : Fragment(R.layout.fragment_stories_maps) {
                             is UiState.Error -> Toast.makeText(
                                 requireContext(),
                                 it.exception.toString(),
-                                Toast.LENGTH_SHORT,
+                                Toast.LENGTH_SHORT
                             ).show()
                             is UiState.Loading -> {
                             }
@@ -131,7 +131,7 @@ class StoriesMapsFragment : Fragment(R.layout.fragment_stories_maps) {
                         else -> menuItem.onNavDestinationSelected(findNavController())
                     }
                 }
-            },
+            }
         )
     }
 
@@ -139,8 +139,8 @@ class StoriesMapsFragment : Fragment(R.layout.fragment_stories_maps) {
         setMapStyle(
             MapStyleOptions.loadRawResourceStyle(
                 requireContext(),
-                R.raw.map_style,
-            ),
+                R.raw.map_style
+            )
         )
         uiSettings.isMapToolbarEnabled = true
     }
@@ -164,7 +164,7 @@ class StoriesMapsFragment : Fragment(R.layout.fragment_stories_maps) {
                 cluster.setOnClusterItemInfoWindowClickListener {
                     findNavController().navigate(
                         resId = R.id.action_storiesMaps_to_detailFragment,
-                        args = bundleOf(Constant.KEY_STORY to it),
+                        args = bundleOf(Constant.KEY_STORY to it)
                     )
                 }
 
@@ -211,9 +211,9 @@ class StoriesMapsFragment : Fragment(R.layout.fragment_stories_maps) {
             requireActivity().showSnackbar(
                 getString(
                     R.string.permission_rationale_message,
-                    permission.joinToString(", ") { it.split(".").last() },
+                    permission.joinToString(", ") { it.split(".").last() }
                 ),
-                Snackbar.LENGTH_INDEFINITE,
+                Snackbar.LENGTH_INDEFINITE
             ) {
                 action(R.string.permission_grant) {
                     Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -231,7 +231,7 @@ class StoriesMapsFragment : Fragment(R.layout.fragment_stories_maps) {
             setTitle(R.string.filter_map)
             setSingleChoiceItems(
                 list.map { it.toString() }.toTypedArray(),
-                list.indexOfFirst { it == perPageList },
+                list.indexOfFirst { it == perPageList }
             ) { _, which ->
                 selectedIndex = which
             }
@@ -254,8 +254,8 @@ class StoriesMapsFragment : Fragment(R.layout.fragment_stories_maps) {
             setMessage(
                 getString(
                     R.string.permission_rationale_message,
-                    permission.joinToString(", ") { it.split(".").last() },
-                ),
+                    permission.joinToString(", ") { it.split(".").last() }
+                )
             )
             setPositiveButton(android.R.string.ok) { dialog, _ ->
                 rationale.accept()

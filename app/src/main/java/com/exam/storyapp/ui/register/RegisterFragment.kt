@@ -61,13 +61,13 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                                 is UiState.Error -> {
                                     binding.formEnable(true)
                                     requireActivity().showSnackbar(
-                                        state.exception.toString(requireContext()),
+                                        state.exception.toString(requireContext())
                                     )
                                 }
                                 is UiState.Success -> {
                                     binding.formEnable(false)
                                     requireActivity().showSnackbar(
-                                        state.data,
+                                        state.data
                                     )
                                     findNavController().navigateUp()
                                 }

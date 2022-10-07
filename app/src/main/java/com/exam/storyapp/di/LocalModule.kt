@@ -37,7 +37,7 @@ object LocalModule {
             serializer = UserPreferenceSerializer,
             produceFile = { appContext.dataStoreFile(Constant.PREFERENCE_NAME) },
             scope = coroutineScope,
-            corruptionHandler = null,
+            corruptionHandler = null
         )
     }
 
@@ -47,7 +47,7 @@ object LocalModule {
         return Room.databaseBuilder(
             context.applicationContext,
             StoryDb::class.java,
-            "story_db",
+            "story_db"
         ).build()
     }
 

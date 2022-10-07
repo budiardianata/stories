@@ -4,7 +4,7 @@
 package com.exam.storyapp.di
 
 import androidx.datastore.core.DataStore
-import com.exam.storyapp.common.util.Constant
+import com.exam.storyapp.common.annotations.BaseUrl
 import com.exam.storyapp.data.source.local.preference.UserPreference
 import com.exam.storyapp.data.source.remote.StoryApi
 import com.exam.storyapp.data.source.remote.adapter.NetworkCallAdapterFactory
@@ -43,13 +43,13 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient, @BaseUrl baseUrl: String): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constant.API_URL)
+            .baseUrl(baseUrl)
             .addConverterFactory(
                 GsonConverterFactory.create(
-                    GsonBuilder().create(),
-                ),
+                    GsonBuilder().create()
+                )
             )
             .addCallAdapterFactory(NetworkCallAdapterFactory.create())
             .client(okHttpClient)

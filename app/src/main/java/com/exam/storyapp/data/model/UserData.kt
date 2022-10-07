@@ -16,7 +16,7 @@ data class UserData(
         return User(
             id = userId,
             name = name,
-            token = token,
+            token = token
         )
     }
 }

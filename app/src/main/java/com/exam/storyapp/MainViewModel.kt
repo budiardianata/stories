@@ -12,10 +12,11 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    userRepository: UserRepository,
+    private val userRepository: UserRepository,
 ) : ViewModel() {
 
     val isLogin: StateFlow<Boolean> = userRepository.getCurrentUser()
@@ -23,6 +24,8 @@ class MainViewModel @Inject constructor(
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
-            true,
+            true
         )
+
+    fun logOut() = viewModelScope.launch { userRepository.signOut() }
 }

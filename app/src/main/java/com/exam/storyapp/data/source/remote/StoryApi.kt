@@ -31,9 +31,7 @@ interface StoryApi {
     @Multipart
     @POST("stories")
     suspend fun uploadStory(
-        @Part("description") description: RequestBody,
-        @Part("lat") lat: RequestBody?,
-        @Part("lon") lon: RequestBody?,
+        @PartMap requestBodies: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part body: MultipartBody.Part,
     ): NetworkResult<DefaultResponse>
 

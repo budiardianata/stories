@@ -40,4 +40,5 @@
     <string name="location_share">Bagikan Lokasi</string>
     <string name="error_location">Lokasi tidak ditemukan</string>
     <string name="home">Beranda</string>
+    <string name="input_invalid">Silahkan Isi Semua Form</string>
 </resources>

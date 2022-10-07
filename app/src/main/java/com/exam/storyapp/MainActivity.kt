@@ -23,12 +23,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-internal class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val binding by viewBinding(ActivityMainBinding::bind, R.id.container)
     private val viewModel by viewModels<MainViewModel>()
     private val navigation by lazy {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navHostFragment.navController
     }
     private val homeDestinationIds = setOf(R.id.homeFragment, R.id.storiesMapsFragment)
@@ -52,9 +51,7 @@ internal class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         navigation.navigate(R.id.action_global_homeFragment)
                     } else if (it.not() && authDestinationIds.contains(navigation.currentDestination?.id)
                         .not()
-                    ) {
-                        navigation.navigate(R.id.action_global_loginFragment)
-                    }
+                    ) { navigation.navigate(R.id.action_global_loginFragment) }
                 }
         }
     }

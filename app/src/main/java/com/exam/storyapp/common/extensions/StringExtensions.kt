@@ -3,10 +3,11 @@
  */
 package com.exam.storyapp.common.extensions
 
+import androidx.core.util.PatternsCompat
 import com.exam.storyapp.common.util.Constant
 
 fun String.isEmailValid(): Boolean {
-    return this.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+    return this.isNotEmpty() && PatternsCompat.EMAIL_ADDRESS.matcher(this).matches()
 }
 
 fun String.isPasswordValid(min: Int = Constant.PASSWORD_MIN): Boolean {
